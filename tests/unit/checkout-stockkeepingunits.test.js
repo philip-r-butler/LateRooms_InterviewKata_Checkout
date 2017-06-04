@@ -30,12 +30,12 @@ describe('Tests for checkout-stockKeepingUnits module', function () {
 
         expect(unit.label).toBe(label);
         expect(unit.price).toBe(price);
-    })
+    });
 
     it('Set single stock keeping unit property', function () {
         var unit, key, property, value, obj;
 
-        key      = 'A'
+        key      = 'A';
         obj      = {label: 'Label for ' + key, price: 50};
         property = 'price';
         value    = 100;
@@ -45,7 +45,7 @@ describe('Tests for checkout-stockKeepingUnits module', function () {
         unit = sku.getUnit('A');
 
         expect(unit[property]).toBe(value);
-    })
+    });
 
     it('Set multiple stock keeping units', function () {
         var units, unit;
@@ -57,7 +57,7 @@ describe('Tests for checkout-stockKeepingUnits module', function () {
             D: {label: 'Label for D', price: 15}
         };
 
-        sku.setUnits(units);
+        sku.set(units);
         unit = sku.getUnit('A');
         expect(unit.price).toBe(units['A'].price);
         unit = sku.getUnit('C');
