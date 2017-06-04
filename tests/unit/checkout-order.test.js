@@ -76,7 +76,7 @@ describe('Tests for checkout-orders module', function () {
         order.add(key1);
         order.add(key2);
 
-        ordered = order.getAll();
+        ordered = order.get();
 
         expect(ordered[0]).toBe(key1);
         expect(ordered[1]).toBe(key2);
