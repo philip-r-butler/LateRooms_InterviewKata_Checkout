@@ -28,3 +28,8 @@ interface ICheckout
 * Example code suggests using Java or C#.
 * I decided to use Javascript instead of Java or C# because I have a pre-configured development environment for this language.
 * For Javascript work I use the JetBrains WebStorm IDE. I used version 2017.1.
+* Created four javascript modules,
+** checkout-app.js - defines and initialises application object literal
+** checkout-order.js - responsible for managing orders i.e. a series of scanned stock units, with price to be paid (including any applicable discount)
+** checkout-billing.js - responsible for calculating the price of a selected stock unit given order details and any discount details for the stock unit
+** checkout-stockkeepingunits.js - responsible for managing stock keeping units i.e. stock items, normal and discount price rules
