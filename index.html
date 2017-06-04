@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example usage of solution to LateRooms Kata - Checkout</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <style type="text/css">
+    body {
+      font-family: Arial, SansSerif
+    }
+  </style>
+</head>
+<body>
+<h1>Example usage of solution to LateRooms Kata - Checkout</h1>
+<div id="example1">
+  <h2>Example 1 - simple stock keeping units of two item types, no discounts</h2>
+  <p>Code:</p>
+  <pre><code class="javascript">
+      var sku, order, bill;
+
+      sku     = checkout.stockKeepingUnits;
+      order   = checkout.order;
+      billing = checkout.billing;
+
+      sku.set({
+        A: {label: 'Label for A', price: 50},
+        B: {label: 'Label for B', price: 30}
+      });
+
+      order.add('B');
+      order.add('A');
+      order.add('B');
+      order.add('A');
+      order.add('A');
+      order.add('A');
+
+      $('#example1 .bill').html(billing.get());
+  </code></pre>
+  <p>Bill total: <span class="bill"></span></p>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript" src="js/checkout-app.js"></script>
+<script type="text/javascript" src="js/checkout-stockkeepingunits.js"></script>
+<script type="text/javascript" src="js/checkout-order.js"></script>
+<script type="text/javascript" src="js/checkout-billing.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    $('pre code').each(function (i, block) {
+      hljs.highlightBlock(block);
+    });
+
+    //Example 1 - simple stock keeping units of two item types, no discounts
+    (function (checkout) {
+      var sku, order, bill;
+
+      sku     = checkout.stockKeepingUnits;
+      order   = checkout.order;
+      billing = checkout.billing;
+
+      sku.set({
+        A: {label: 'Label for A', price: 50},
+        B: {label: 'Label for B', price: 30}
+      });
+
+      order.add('B');
+      order.add('A');
+      order.add('B');
+      order.add('A');
+      order.add('A');
+      order.add('A');
+
+      $('#example1 .bill').html(billing.get());
+
+    }(lateRooms.kata.checkout));
+
+  });
+</script>
+</body>
+</html>
