@@ -25,7 +25,7 @@
             removeLast: function () {
                 order.pop();
             },
-            getAll: function () {
+            get: function () {
                 return order;
             },
             getItem: function (index) {
