@@ -25,6 +25,6 @@ interface ICheckout
 
 # SOLUTION
 ## Design decisions
-* Example code suggests using Java or C#. However, the language to be used is not prescribed.
+* Example code suggests using Java or C#.
 * I decided to use Javascript instead of Java or C# because I have a pre-configured development environment for this language.
 * For Javascript work I use the JetBrains WebStorm IDE. I used version 2017.1.
