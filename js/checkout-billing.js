@@ -8,6 +8,8 @@
  **/
 (function (checkout) {
 
+    'use strict';
+
     checkout.billing = (function () {
         return {
             example1: function () {

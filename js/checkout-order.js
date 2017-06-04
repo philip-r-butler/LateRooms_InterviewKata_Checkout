@@ -10,6 +10,8 @@
  **/
 (function (checkout) {
 
+    'use strict';
+
     checkout.order = (function () {
         return {
             example1: function () {
