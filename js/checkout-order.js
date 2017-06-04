@@ -12,21 +12,42 @@
 
     'use strict';
 
-    checkout.order = (function () {
+    checkout.order = function () {
 
-        var orders;
+        var order;
 
-        orders = [];
+        order = [];
 
         return {
             add: function (key) {
+                order.push(key);
             },
             removeLast: function () {
+                order.pop();
+            },
+            getAll: function () {
+                return order;
+            },
+            getItem: function (index) {
+                return order[index];
             },
             count: function () {
-                return 1;
+                return order.length;
+            },
+            countItem: function (item) {
+                var i, result;
+                i      = 0;
+                result = 0;
+                for (i; i < order.length; i += 1) {
+                    if (order[i] == item) {
+                        result += 1;
+                    }
+                }
+                return result;
+            },
+            clear: function () {
+                order = [];
             }
         }
-    }());
-
+    }();
 }(lateRooms.kata.checkout));
