@@ -53,7 +53,7 @@ describe('Tests for checkout-orders module', function () {
         expect(order.getItem(3)).toBe(key1);
         expect(order.getItem(1)).toBe(key2);
         expect(order.getItem(4)).toBe(key3);
-    })
+    });
 
     it('Remove last order', function () {
         var key;
