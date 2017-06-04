@@ -2,7 +2,7 @@
  * Created by Phil Butler on 04/06/2017.
  */
 /*global lateRooms */
-describe('Tests for Stock Keeping Units module', function () {
+describe('Tests for checkout-stockKeepingUnits module', function () {
 
     'use strict';
 
