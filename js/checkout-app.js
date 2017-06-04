@@ -13,3 +13,12 @@ var lateRooms = lateRooms || {};
 
 lateRooms.kata          = lateRooms.kata || {};
 lateRooms.kata.checkout = {};
+
+// lateRooms.kata.checkout.stockKeepingUnits.setUnits(
+//     {
+//         A: {label: 'Label for A', price: 50},
+//         B: {label: 'Label for B', price: 30},
+//         C: {label: 'Label for C', price: 20},
+//         D: {label: 'Label for D', price: 15}
+//     }
+// );

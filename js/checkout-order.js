@@ -13,10 +13,18 @@
     'use strict';
 
     checkout.order = (function () {
+
+        var orders;
+
+        orders = [];
+
         return {
-            example1: function () {
+            add: function (key) {
             },
-            example2: function () {
+            removeLast: function () {
+            },
+            count: function () {
+                return 1;
             }
         }
     }());

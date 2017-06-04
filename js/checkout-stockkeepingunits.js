@@ -11,10 +11,24 @@
     'use strict';
 
     checkout.stockKeepingUnits = (function () {
+        var units;
+        units = {};
+
         return {
-            example1: function () {
+            setUnits: function (obj) {
+                units = obj;  
             },
-            example2: function () {
+            addUnit: function (key, obj) {
+                units[key] = obj;
+            },
+            setUnitProperty: function (key, property, value) {
+                units[key][property] = value;
+            },
+            getUnit: function (key) {
+                return units[key];
+            },
+            clear: function () {
+                units = {};
             }
         }
     }());

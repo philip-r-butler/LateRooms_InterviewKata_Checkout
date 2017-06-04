@@ -2,7 +2,7 @@
  * Created by Phil Butler on 04/06/2017.
  */
 /*global lateRooms */
-describe('calculator controller tests', function () {
+describe('Tests for Stock Keeping Units module', function () {
 
     'use strict';
 
@@ -16,113 +16,52 @@ describe('calculator controller tests', function () {
         sku.clear();
     });
 
-    it('Test test', function () {
-        var num;
-        num = 1;
+    it('Set single stock keeping unit', function () {
+        var unit, key, label, price, obj;
 
-        expect(num).toBe(1);
+        key   = 'A';
+        label = 'Label for ' + key;
+        price = 50;
 
+        obj = {label: label, price: price};
+
+        sku.addUnit(key, obj);
+        unit = sku.getUnit('A');
+
+        expect(unit.label).toBe(label);
+        expect(unit.price).toBe(price);
     })
-    /*    it('number button clicked event triggered', function () {
-     var number = myCalculator.view.getUISelectors().number;
 
-     spyEvent = spyOnEvent(number, 'click');
+    it('Set single stock keeping unit property', function () {
+        var unit, key, property, value, obj;
 
-     $(number).trigger('click');
-     expect(spyEvent).toHaveBeenTriggered();
-     });
+        key      = 'A'
+        obj      = {label: 'Label for ' + key, price: 50};
+        property = 'price';
+        value    = 100;
 
-     it('operator button clicked event triggered', function () {
-     var operator = myCalculator.view.getUISelectors().operator;
+        sku.addUnit('A', obj);
+        sku.setUnitProperty(key, property, value);
+        unit = sku.getUnit('A');
 
-     spyEvent = spyOnEvent(operator, 'click');
+        expect(unit[property]).toBe(value);
+    })
 
-     $(operator).trigger('click');
-     expect(spyEvent).toHaveBeenTriggered();
-     });
+    it('Set multiple stock keeping units', function () {
+        var units, unit;
 
-     it('number button clicked adds character to expression', function () {
-     $(myCalculator.view.getUISelectors().number).trigger('click');
-     expect(model.get()).toBe('9');
-     });
+        units = {
+            A: {label: 'Label for A', price: 50},
+            B: {label: 'Label for B', price: 30},
+            C: {label: 'Label for C', price: 20},
+            D: {label: 'Label for D', price: 15}
+        };
 
-     it('operator button clicked adds character to expression', function () {
-     var number   = myCalculator.view.getUISelectors().number,
-     operator = myCalculator.view.getUISelectors().operator;
+        sku.setUnits(units);
+        unit = sku.getUnit('A');
+        expect(unit.price).toBe(units['A'].price);
+        unit = sku.getUnit('C');
+        expect(unit.price).toBe(units['C'].price);
+    })
 
-     $(number).trigger('click');
-     $(operator).trigger('click');
-     expect(model.get()).toBe('9+');
-     });
-
-     it('backspace button clicked removes last character from expression', function () {
-     var number   = myCalculator.view.getUISelectors().number,
-     operator = myCalculator.view.getUISelectors().operator,
-     remove   = myCalculator.view.getUISelectors().remove;
-
-     $(number).trigger('click');
-     $(operator).trigger('click');
-     $(number).trigger('click');
-     expect(model.get()).toBe('9+9');
-     $(remove).trigger('click');
-     expect(model.get()).toBe('9+');
-     });
-
-     it('evaluate button clicked evaluates expression', function () {
-     var number   = myCalculator.view.getUISelectors().number,
-     operator = myCalculator.view.getUISelectors().operator,
-     evaluate = myCalculator.view.getUISelectors().evaluate;
-
-     $(number).trigger('click');
-     $(operator).trigger('click');
-     $(number).trigger('click');
-     $(evaluate).trigger('click');
-     expect(model.get()).toBe('18');
-     });
-
-     it('number key pressed add character to expression', function () {
-     var code = 49;
-
-     $(document).trigger($.Event('keypress', {which: code, keyCode: code}));
-     expect(model.get()).toBe('1');
-     });
-
-     it('number key pressed add character to expression', function () {
-     var code = 49;
-
-     $(document).trigger($.Event('keypress', {which: code, keyCode: code}));
-     expect(model.get()).toBe('1');
-     });
-
-     it('addToExpression subscription adds character to model expression', function () {
-     $.publish('addToExpression', '1');
-     expect(model.get()).toBe('1');
-     });
-
-     it('two addToExpression subscriptions appends two characters to model expression', function () {
-     $.publish('addToExpression', '1');
-     $.publish('addToExpression', '2');
-     expect(model.get()).toBe('12');
-     });
-
-     it('addToExpression subscription appends clause to model expression', function () {
-     $.publish('addToExpression', '1+2');
-     expect(model.get()).toBe('1+2');
-     });
-
-     it('evaluate subscription evaluates and updates expression', function () {
-     $.publish('addToExpression', '1+2');
-     $.publish('evaluate');
-     expect(model.get()).toBe('3');
-     });
-
-     it('removeLastFromExpression subscription removes last item from expression', function () {
-     $.publish('addToExpression', '1+2');
-     $.publish('removeLastFromExpression');
-     expect(model.get()).toBe('1+');
-     $.publish('removeLastFromExpression');
-     expect(model.get()).toBe('1');
-     });
-
-     */
 });
