@@ -10,13 +10,16 @@
 
     'use strict';
 
-    checkout.stockKeepingUnits = (function () {
+    checkout.stockKeepingUnits = function () {
         var units;
         units = {};
 
         return {
-            setUnits: function (obj) {
-                units = obj;  
+            set: function (obj) {
+                units = obj;
+            },
+            get: function () {
+                return units;
             },
             addUnit: function (key, obj) {
                 units[key] = obj;
@@ -27,10 +30,13 @@
             getUnit: function (key) {
                 return units[key];
             },
+            count: function () {
+                return units.length;
+            },
             clear: function () {
                 units = {};
             }
         }
-    }());
+    }();
 
 }(lateRooms.kata.checkout));
