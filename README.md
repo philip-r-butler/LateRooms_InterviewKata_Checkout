@@ -32,7 +32,16 @@ interface ICheckout
   * checkout-order.js - responsible for managing orders i.e. a series of scanned stock units, with price to be paid (including any applicable discount)
   * checkout-billing.js - responsible for calculating the price of a selected stock unit given order details and any discount details for the stock unit
   * checkout-stockkeepingunits.js - responsible for managing stock keeping units i.e. stock items, normal and discount price rules
+* Provided index.html to demonstrate usage
 ## Development/testing environment
 * Used JetBrains WebStorm IDE. I used version 2017.1.
 * Used Karma test runner, for general installation and configuration see https://karma-runner.github.io/, for installation using Webstorm see https://blog.jetbrains.com/webstorm/2013/10/running-javascript-tests-with-karma-in-webstorm-7/
 * Used Jasmine testing framework, for general installation and configuration see https://github.com/jasmine/jasmine, for installation using Webstorm see https://stackoverflow.com/questions/8108461/how-can-i-get-webstorm-to-recognize-jasmine-methods
+* Tested using PhamtonJS (see http://phantomjs.org/) and Chrome.
+## Example usage
+* Download/clone solution
+* Load index.html into browser
+## Todo
+* Refactor calculateBill() and move definition of discount functions into stock keeping units
+* Optimise calculateBill() so does not need to loop entire stock keeping units
+* Provide examples of running tests outside of Webstorm
