@@ -268,7 +268,7 @@ describe('Tests for checkout-billing module', function () {
                 price: 20
             },
             'D': {
-                label: 'Label for C',
+                label: 'Label for D',
                 price: 15
             }
         });
