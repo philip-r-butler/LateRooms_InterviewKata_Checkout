@@ -38,12 +38,15 @@ interface ICheckout
 * Used JetBrains WebStorm IDE. I used version 2017.1.
 * Used Karma test runner, for general installation and configuration see https://karma-runner.github.io/, for installation using Webstorm see https://blog.jetbrains.com/webstorm/2013/10/running-javascript-tests-with-karma-in-webstorm-7/
 * Used Jasmine testing framework, for general installation and configuration see https://github.com/jasmine/jasmine, for installation using Webstorm see https://stackoverflow.com/questions/8108461/how-can-i-get-webstorm-to-recognize-jasmine-methods
-* Tested using PhamtonJS (see http://phantomjs.org/) and Chrome.
+* Tested using PhamtonJS (see http://phantomjs.org/) and Chrome
 * Unit tests are located in the folder /tests/unit
 ## Example usage
 * Checkout solution from https://github.com/philip-r-butler/LateRooms_InterviewKata_Checkout.git
 * Load index.html into browser for examples of us
 ## Todo
+* Add unit tests for undeclared, incorrectly initialised and empty sku and order
+* Add error handling
 * Refactor calculateBill() and move definition of discount functions into stock keeping units
 * Optimise calculateBill() so does not need to loop entire stock keeping units
 * Provide examples of running tests outside of Webstorm
+* Make node.js friendly version
