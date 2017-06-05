@@ -26,7 +26,7 @@ interface ICheckout
 
 # Solution notes
 ## Design decisions
-* Example code suggests using Java or C#.
+* Example code  in test suggested using Java or C#.
 * I decided to use Javascript instead of Java or C# because I have a pre-configured development environment for this language.
 * Created four javascript modules,
   * checkout-app.js - defines and initialises application object literal
@@ -39,9 +39,10 @@ interface ICheckout
 * Used Karma test runner, for general installation and configuration see https://karma-runner.github.io/, for installation using Webstorm see https://blog.jetbrains.com/webstorm/2013/10/running-javascript-tests-with-karma-in-webstorm-7/
 * Used Jasmine testing framework, for general installation and configuration see https://github.com/jasmine/jasmine, for installation using Webstorm see https://stackoverflow.com/questions/8108461/how-can-i-get-webstorm-to-recognize-jasmine-methods
 * Tested using PhamtonJS (see http://phantomjs.org/) and Chrome.
+* Unit tests are located in the folder /tests/unit
 ## Example usage
-* Download/clone solution
-* Load index.html into browser
+* Checkout solution from https://github.com/philip-r-butler/LateRooms_InterviewKata_Checkout.git
+* Load index.html into browser for examples of us
 ## Todo
 * Refactor calculateBill() and move definition of discount functions into stock keeping units
 * Optimise calculateBill() so does not need to loop entire stock keeping units
