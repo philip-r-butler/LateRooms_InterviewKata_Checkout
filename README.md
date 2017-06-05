@@ -1,4 +1,5 @@
-# TEST - Checkout Kata
+# Test
+## Laterooms Kata - Checkout
 
 Implement the code for a checkout system that handles pricing schemes such as "pineapples cost 50, three pineapples cost 130."
 
@@ -23,7 +24,7 @@ interface ICheckout
 }
 ```
 
-# SOLUTION
+# Solution notes
 ## Design decisions
 * Example code suggests using Java or C#.
 * I decided to use Javascript instead of Java or C# because I have a pre-configured development environment for this language.
