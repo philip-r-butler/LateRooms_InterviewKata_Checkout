@@ -44,7 +44,8 @@ interface ICheckout
 * Checkout solution from https://github.com/philip-r-butler/LateRooms_InterviewKata_Checkout.git
 * Load index.html into browser for examples of us
 ## Todo
-* Add unit tests for undeclared, incorrectly initialised and empty sku and order
+* Check test coverage
+* Add unit tests for undeclared, incorrectly initialised and empty objects, in particular sku and order
 * Add error handling
 * Refactor calculateBill() and move definition of discount functions into stock keeping units
 * Optimise calculateBill() so does not need to loop entire stock keeping units
