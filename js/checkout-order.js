@@ -21,9 +21,11 @@
         return {
             add: function (key) {
                 order.push(key);
+                checkout.billing.update();
             },
             removeLast: function () {
                 order.pop();
+                checkout.billing.update();
             },
             get: function () {
                 return order;
@@ -47,6 +49,7 @@
             },
             clear: function () {
                 order = [];
+                checkout.billing.update();
             }
         }
     }();
