@@ -47,8 +47,7 @@
                 itemCountAtFullPrice = itemCount - itemCountAtDiscountPrice;
                 result += (itemFullPrice * itemCountAtFullPrice) + (itemDiscountPrice * itemCountAtDiscountPrice);
             }
-            // This rounds to two decimal places, need to refactor this
-            return Math.round(result * 100) / 100;
+            return result;
         };
 
         return {
