@@ -2,16 +2,18 @@
  * Created by Phil Butler on 04/06/2017.
  */
 /*global lateRooms */
-describe('Tests for checkout-billing module', function () {
+describe("Tests for checkout-billing module", function () {
 
-    'use strict';
+    "use strict";
 
-    var bill, order, sku;
+    var bill;
+    var order;
+    var sku;
 
     beforeEach(function () {
         order = lateRooms.kata.checkout.order;
-        sku   = lateRooms.kata.checkout.stockKeepingUnits;
-        bill  = lateRooms.kata.checkout.billing;
+        sku = lateRooms.kata.checkout.stockKeepingUnits;
+        bill = lateRooms.kata.checkout.billing;
     });
 
     afterEach(function () {
@@ -20,16 +22,16 @@ describe('Tests for checkout-billing module', function () {
         bill.clear();
     });
 
-    it('Calculate simple bill with single item type in order, no discounts', function () {
+    it("Calculate simple bill with single item type in order, no discounts", function () {
         var key1;
 
-        key1 = 'A';
+        key1 = "A";
 
         order.add(key1);
         order.add(key1);
 
         sku.set({
-            'A': {label: 'Label for A', price: 50}
+            "A": {label: "Label for A", price: 50}
         });
 
         bill.update();
@@ -38,12 +40,14 @@ describe('Tests for checkout-billing module', function () {
 
     });
 
-    it('Calculate simple bill with multiple item type in order, no discounts', function () {
-        var key1, key2, key3;
+    it("Calculate simple bill with multiple item type in order, no discounts", function () {
+        var key1;
+        var key2;
+        var key3;
 
-        key1 = 'A';
-        key2 = 'B';
-        key3 = 'C';
+        key1 = "A";
+        key2 = "B";
+        key3 = "C";
 
         order.add(key1);
         order.add(key2);
@@ -52,9 +56,9 @@ describe('Tests for checkout-billing module', function () {
         order.add(key3);
 
         sku.set({
-            'A': {label: 'Label for A', price: 50},
-            'B': {label: 'Label for B', price: 30},
-            'C': {label: 'Label for C', price: 15}
+            "A": {label: "Label for A", price: 50},
+            "B": {label: "Label for B", price: 30},
+            "C": {label: "Label for C", price: 15}
         });
 
         bill.update();
@@ -62,17 +66,17 @@ describe('Tests for checkout-billing module', function () {
         expect(bill.get()).toBe(195);
     });
 
-    it('Calculate bill with single item type in order, with discount but discount limit not reached', function () {
+    it("Calculate bill with single item type in order, with discount but discount limit not reached", function () {
         var key1;
 
-        key1 = 'A';
+        key1 = "A";
 
         order.add(key1);
         order.add(key1);
 
         sku.set({
-            'A': {
-                label: 'Label for A',
+            "A": {
+                label: "Label for A",
                 price: 50,
                 discount: {
                     price: function () {
@@ -89,18 +93,18 @@ describe('Tests for checkout-billing module', function () {
 
     });
 
-    it('Calculate bill with single item type in order, with discount and discount limit reached', function () {
+    it("Calculate bill with single item type in order, with discount and discount limit reached", function () {
         var key1;
 
-        key1 = 'A';
+        key1 = "A";
 
         order.add(key1);
         order.add(key1);
         order.add(key1);
 
         sku.set({
-            'A': {
-                label: 'Label for A',
+            "A": {
+                label: "Label for A",
                 price: 50,
                 discount: {
                     price: function () {
@@ -117,10 +121,10 @@ describe('Tests for checkout-billing module', function () {
 
     });
 
-    it('Calculate bill with single item type in order, with discount and discount limit exceeded', function () {
+    it("Calculate bill with single item type in order, with discount and discount limit exceeded", function () {
         var key1;
 
-        key1 = 'A';
+        key1 = "A";
 
         order.add(key1);
         order.add(key1);
@@ -129,8 +133,8 @@ describe('Tests for checkout-billing module', function () {
         order.add(key1);
 
         sku.set({
-            'A': {
-                label: 'Label for A',
+            "A": {
+                label: "Label for A",
                 price: 50,
                 discount: {
                     price: function () {
@@ -147,10 +151,10 @@ describe('Tests for checkout-billing module', function () {
 
     });
 
-    it('Calculate bill with single item type in order, with discount and discount limit exceeded twice', function () {
+    it("Calculate bill with single item type in order, with discount and discount limit exceeded twice", function () {
         var key1;
 
-        key1 = 'A';
+        key1 = "A";
 
         order.add(key1);
         order.add(key1);
@@ -160,8 +164,8 @@ describe('Tests for checkout-billing module', function () {
         order.add(key1);
 
         sku.set({
-            'A': {
-                label: 'Label for A',
+            "A": {
+                label: "Label for A",
                 price: 50,
                 discount: {
                     price: function () {
@@ -178,11 +182,12 @@ describe('Tests for checkout-billing module', function () {
 
     });
 
-    it('Calculate bill with two item types in order, with and without discount and discount limit exceeded', function () {
-        var key1, key2;
+    it("Calculate bill with two item types in order, with and without discount and discount limit exceeded", function () {
+        var key1;
+        var key2;
 
-        key1 = 'A';
-        key2 = 'B';
+        key1 = "A";
+        key2 = "B";
 
         order.add(key1);
         order.add(key2);
@@ -193,8 +198,8 @@ describe('Tests for checkout-billing module', function () {
         order.add(key1);
 
         sku.set({
-            'A': {
-                label: 'Label for A',
+            "A": {
+                label: "Label for A",
                 price: 50,
                 discount: {
                     price: function () {
@@ -203,8 +208,8 @@ describe('Tests for checkout-billing module', function () {
                     limit: 3
                 }
             },
-            'B': {
-                label: 'Label for B',
+            "B": {
+                label: "Label for B",
                 price: 30,
                 discount: {
                     price: function () {
@@ -222,13 +227,16 @@ describe('Tests for checkout-billing module', function () {
 
     });
 
-    it('Calculate bill with four item types in order, with and without discount and discount limit exceeded', function () {
-        var key1, key2, key3, key4;
+    it("Calculate bill with four item types in order, with and without discount and discount limit exceeded", function () {
+        var key1;
+        var key2;
+        var key3;
+        var key4;
 
-        key1 = 'A';
-        key2 = 'B';
-        key3 = 'C';
-        key4 = 'D';
+        key1 = "A";
+        key2 = "B";
+        key3 = "C";
+        key4 = "D";
 
         order.add(key1);
         order.add(key2);
@@ -243,8 +251,8 @@ describe('Tests for checkout-billing module', function () {
         order.add(key1);
 
         sku.set({
-            'A': {
-                label: 'Label for A',
+            "A": {
+                label: "Label for A",
                 price: 50,
                 discount: {
                     price: function () {
@@ -253,8 +261,8 @@ describe('Tests for checkout-billing module', function () {
                     limit: 3
                 }
             },
-            'B': {
-                label: 'Label for B',
+            "B": {
+                label: "Label for B",
                 price: 30,
                 discount: {
                     price: function () {
@@ -263,12 +271,12 @@ describe('Tests for checkout-billing module', function () {
                     limit: 2
                 }
             },
-            'C': {
-                label: 'Label for C',
+            "C": {
+                label: "Label for C",
                 price: 20
             },
-            'D': {
-                label: 'Label for D',
+            "D": {
+                label: "Label for D",
                 price: 15
             }
         });
