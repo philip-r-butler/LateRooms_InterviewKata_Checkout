@@ -8,6 +8,7 @@
  * Module also acts to decouple dependency between order and stock keeping units
  * Uses dependency injection to expose order and stock keeping unit methods
  **/
+/*global lateRooms */
 (function (checkout) {
 
     'use strict';
@@ -18,34 +19,59 @@
 
         bill = 0;
 
-        // This function could do with refactoring,
+        function getOrderCount(order, key) {
+            return order.countItem(key);
+        }
+
+        function hasDiscount(unit) {
+            return unit.hasOwnProperty('discount');
+        }
+
+        function hasDiscountLimit(unit) {
+            return hasDiscount(unit) && unit.discount.hasOwnProperty('limit');
+        }
+
+        function hasDiscountPrice(unit) {
+            return hasDiscount(unit) && unit.discount.hasOwnProperty('price');
+        }
+
+        function getDiscountLimit(unit) {
+            return hasDiscountLimit(unit) ? unit.discount.limit : null;
+        }
+
+        function getDiscountPrice(unit) {
+            return hasDiscountPrice(unit) ? unit.discount.price() : null;
+        }
+
+        function getCountAtDiscountPrice(count, limit) {
+            return limit && count ? Math.floor(count / limit) * limit : null;
+        }
+
+        function getFullPrice(unit) {
+            return unit.price;
+        }
+
+        function getPrice(count, countAtDiscountPrice, fullPrice, discountPrice) {
+            return ((count - countAtDiscountPrice) * fullPrice) + (countAtDiscountPrice * discountPrice);
+        }
+
         // relies on fixed rule for discounts,
-        // might be better to define rules in stock keeping units object literal as discount functions,
+        // might be better to define rules in stock keeping units object literal as discount functions
         calculateBill = function () {
-            var key, skuUnits, result, itemCount, itemFullPrice, itemCountDiscountLimit, itemDiscountPrice, itemCountAtDiscountPrice, itemCountAtFullPrice;
+            var key, units, unit, result, unitCount;
 
-            result   = 0;
-            skuUnits = sku.get();
+            result = 0;
+            units = sku.get();
 
-            for (key in skuUnits) {
-                if (!skuUnits.hasOwnProperty(key)) {
+            for (key in units) {
+                if (!units.hasOwnProperty(key)) {
                     continue;
                 }
-                itemCount                = order.countItem(key);
-                itemFullPrice            = skuUnits[key].price;
-                itemCountAtFullPrice     = 0;
-                itemCountAtDiscountPrice = 0;
-                itemCountDiscountLimit   = 0;
-                itemDiscountPrice        = 0;
 
-                if (skuUnits[key].hasOwnProperty('discount')) {
-                    itemCountDiscountLimit   = skuUnits[key]['discount'].limit;
-                    itemDiscountPrice        = skuUnits[key]['discount'].price();
-                    itemCountAtDiscountPrice = Math.floor(itemCount / itemCountDiscountLimit) * itemCountDiscountLimit;
-                }
+                unit = units[key];
+                unitCount = getOrderCount(order, key);
 
-                itemCountAtFullPrice = itemCount - itemCountAtDiscountPrice;
-                result += (itemFullPrice * itemCountAtFullPrice) + (itemDiscountPrice * itemCountAtDiscountPrice);
+                result += getPrice(unitCount, getCountAtDiscountPrice(unitCount, getDiscountLimit(unit)), getFullPrice(unit), getDiscountPrice(unit));
             }
             return result;
         };
@@ -60,6 +86,6 @@
             clear: function () {
                 bill = 0;
             }
-        }
+        };
     }(checkout.order, checkout.stockKeepingUnits);
 }(lateRooms.kata.checkout));
