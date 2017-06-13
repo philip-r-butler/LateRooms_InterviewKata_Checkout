@@ -6,11 +6,12 @@
  *
  * Uses module pattern to encapsulate code and not pollute global namespace
  **/
+/*global lateRooms */
 (function (checkout) {
 
-    'use strict';
+    "use strict";
 
-    checkout.stockKeepingUnits = function () {
+    checkout.stockKeepingUnits = (function () {
         var units;
         units = {};
 
@@ -40,7 +41,7 @@
                 units = {};
                 checkout.billing.update();
             }
-        }
-    }();
+        };
+    }());
 
 }(lateRooms.kata.checkout));
