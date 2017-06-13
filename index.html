@@ -25,18 +25,18 @@
       order.clear();
 
       sku.set({
-        A: {label: 'Label for A', price: 50},
-        B: {label: 'Label for B', price: 30}
+        A: {label: "Label for A", price: 50},
+        B: {label: "Label for B", price: 30}
       });
 
-      order.add('B');
-      order.add('A');
-      order.add('B');
-      order.add('A');
-      order.add('A');
-      order.add('A');
+      order.add("B");
+      order.add("A");
+      order.add("B");
+      order.add("A");
+      order.add("A");
+      order.add("A");
 
-      $('#example1 .bill').html(billing.get());
+      $("#example1 .bill").html(billing.get());
   </code></pre>
   <p>Bill total: <span class="bill"></span></p>
 </div>
@@ -53,22 +53,22 @@
       order.clear();
 
       sku.set({
-        A: {label: 'Label for A', price: 50},
-        B: {label: 'Label for B', price: 30}
+        A: {label: "Label for A", price: 50},
+        B: {label: "Label for B", price: 30}
       });
 
-      order.add('B');
-      $('#example2 .bill1').html(billing.get());
-      order.add('A');
-      $('#example2 .bill2').html(billing.get());
-      order.add('B');
-      order.add('A');
-      order.add('A');
-      $('#example2 .bill3').html(billing.get());
-      order.add('A');
-      $('#example2 .bill4').html(billing.get());
+      order.add("B");
+      $("#example2 .bill1").html(billing.get());
+      order.add("A");
+      $("#example2 .bill2").html(billing.get());
+      order.add("B");
+      order.add("A");
+      order.add("A");
+      $("#example2 .bill3").html(billing.get());
+      order.add("A");
+      $("#example2 .bill4").html(billing.get());
       order.removeLast();
-      $('#example2 .bill5').html(billing.get());
+      $("#example2 .bill5").html(billing.get());
   </code></pre>
   <p>Bill total: <span class="bill1"></span></p>
   <p>Bill total: <span class="bill2"></span></p>
@@ -89,19 +89,19 @@
       order.clear();
 
       sku.set({
-        A: {label: 'Label for A', price: 50},
-        B: {label: 'Label for B', price: 30}
+        A: {label: "Label for A", price: 50},
+        B: {label: "Label for B", price: 30}
       });
 
-      order.add('B');
-      $('#example3 .bill1').html(billing.get());
-      order.add('A');
-      order.add('B');
-      $('#example3 .bill2').html(billing.get());
-      sku.setUnitProperty('B','price',50);
-      $('#example3 .bill3').html(billing.get());
-      sku.setUnitProperty('A','price',30);
-      $('#example3 .bill4').html(billing.get());
+      order.add("B");
+      $("#example3 .bill1").html(billing.get());
+      order.add("A");
+      order.add("B");
+      $("#example3 .bill2").html(billing.get());
+      sku.setUnitProperty("B","price",50);
+      $("#example3 .bill3").html(billing.get());
+      sku.setUnitProperty("A","price",30);
+      $("#example3 .bill4").html(billing.get());
   </code></pre>
   <p>Bill total: <span class="bill1"></span></p>
   <p>Bill total: <span class="bill2"></span></p>
@@ -121,8 +121,8 @@
       order.clear();
 
       sku.set({
-        'A': {
-          label: 'Label for A',
+        "A": {
+          label: "Label for A",
           price: 50,
           discount: {
             price: function () {
@@ -131,8 +131,8 @@
             limit: 3
           }
         },
-        'B': {
-          label: 'Label for B',
+        "B": {
+          label: "Label for B",
           price: 30,
           discount: {
             price: function () {
@@ -141,182 +141,182 @@
             limit: 2
           }
         },
-        'C': {
-          label: 'Label for C',
+        "C": {
+          label: "Label for C",
           price: 20
         },
-        'D': {
-          label: 'Label for D',
+        "D": {
+          label: "Label for D",
           price: 15
         }
       });
 
-      order.add('A');
-      order.add('B');
-      order.add('A');
-      order.add('A');
-      order.add('B');
-      order.add('B');
-      order.add('A');
-      order.add('D');
-      order.add('C');
-      order.add('D');
-      order.add('C');
-      $('#example4 .bill').html(billing.get());
+      order.add("A");
+      order.add("B");
+      order.add("A");
+      order.add("A");
+      order.add("B");
+      order.add("B");
+      order.add("A");
+      order.add("D");
+      order.add("C");
+      order.add("D");
+      order.add("C");
+      $("#example4 .bill").html(billing.get());
   </code></pre>
   <p>Bill total: <span class="bill"></span></p>
 </div>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"
-        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript" src="js/checkout-app.js"></script>
 <script type="text/javascript" src="js/checkout-stockkeepingunits.js"></script>
 <script type="text/javascript" src="js/checkout-order.js"></script>
 <script type="text/javascript" src="js/checkout-billing.js"></script>
 <script type="text/javascript">
-  $(document).ready(function () {
+    $(document).ready(function () {
 
-    $('pre code').each(function (i, block) {
-      hljs.highlightBlock(block);
+        $("pre code").each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
+        //Example 1 - simple stock keeping units of two item types, no discounts
+        (function (checkout) {
+            var sku, order, billing;
+
+            sku = checkout.stockKeepingUnits;
+            order = checkout.order;
+            billing = checkout.billing;
+
+            order.clear();
+
+            sku.set({
+                A: {label: "Label for A", price: 50},
+                B: {label: "Label for B", price: 30}
+            });
+
+            order.add("B");
+            order.add("A");
+            order.add("B");
+            order.add("A");
+            order.add("A");
+            order.add("A");
+
+            $("#example1 .bill").html(billing.get());
+
+        }(lateRooms.kata.checkout));
+
+        //Example 2 - demonstrates updating of bill as items are added to order
+        (function (checkout) {
+            var sku, order, billing;
+
+            sku = checkout.stockKeepingUnits;
+            order = checkout.order;
+            billing = checkout.billing;
+
+            order.clear();
+
+            sku.set({
+                A: {label: "Label for A", price: 50},
+                B: {label: "Label for B", price: 30}
+            });
+
+            order.add("B");
+            $("#example2 .bill1").html(billing.get());
+            order.add("A");
+            $("#example2 .bill2").html(billing.get());
+            order.add("B");
+            order.add("A");
+            order.add("A");
+            $("#example2 .bill3").html(billing.get());
+            order.add("A");
+            $("#example2 .bill4").html(billing.get());
+            order.removeLast();
+            $("#example2 .bill5").html(billing.get());
+
+        }(lateRooms.kata.checkout));
+
+        // Example 3 - demonstrates updating of bill after changes in stock keeping unit prices
+        (function (checkout) {
+            var sku, order, billing;
+
+            sku = checkout.stockKeepingUnits;
+            order = checkout.order;
+            billing = checkout.billing;
+
+            order.clear();
+
+            sku.set({
+                A: {label: "Label for A", price: 50},
+                B: {label: "Label for B", price: 30}
+            });
+
+            order.add("B");
+            $("#example3 .bill1").html(billing.get());
+            order.add("A");
+            order.add("B");
+            $("#example3 .bill2").html(billing.get());
+            sku.setUnitProperty("B", "price", 50);
+            $("#example3 .bill3").html(billing.get());
+            sku.setUnitProperty("A", "price", 30);
+            $("#example3 .bill4").html(billing.get());
+        }(lateRooms.kata.checkout));
+
+        // Example 4 - demonstrates calculation of bill from orders with discount options in stock keeping unit prices
+        (function (checkout) {
+            var sku, order, billing;
+
+            sku = checkout.stockKeepingUnits;
+            order = checkout.order;
+            billing = checkout.billing;
+
+            order.clear();
+
+            sku.set({
+                "A": {
+                    label: "Label for A",
+                    price: 50,
+                    discount: {
+                        price: function () {
+                            return 130 / 3;
+                        },
+                        limit: 3
+                    }
+                },
+                "B": {
+                    label: "Label for B",
+                    price: 30,
+                    discount: {
+                        price: function () {
+                            return 45 / 2;
+                        },
+                        limit: 2
+                    }
+                },
+                "C": {
+                    label: "Label for C",
+                    price: 20
+                },
+                "D": {
+                    label: "Label for D",
+                    price: 15
+                }
+            });
+
+            order.add("A");
+            order.add("B");
+            order.add("A");
+            order.add("A");
+            order.add("B");
+            order.add("B");
+            order.add("A");
+            order.add("D");
+            order.add("C");
+            order.add("D");
+            order.add("C");
+            $("#example4 .bill").html(billing.get());
+        }(lateRooms.kata.checkout));
     });
-
-    //Example 1 - simple stock keeping units of two item types, no discounts
-    (function (checkout) {
-      var sku, order, billing;
-
-      sku     = checkout.stockKeepingUnits;
-      order   = checkout.order;
-      billing = checkout.billing;
-
-      order.clear();
-
-      sku.set({
-        A: {label: 'Label for A', price: 50},
-        B: {label: 'Label for B', price: 30}
-      });
-
-      order.add('B');
-      order.add('A');
-      order.add('B');
-      order.add('A');
-      order.add('A');
-      order.add('A');
-
-      $('#example1 .bill').html(billing.get());
-
-    }(lateRooms.kata.checkout));
-
-    //Example 2 - demonstrates updating of bill as items are added to order
-    (function (checkout) {
-      var sku, order, billing;
-
-      sku     = checkout.stockKeepingUnits;
-      order   = checkout.order;
-      billing = checkout.billing;
-
-      order.clear();
-
-      sku.set({
-        A: {label: 'Label for A', price: 50},
-        B: {label: 'Label for B', price: 30}
-      });
-
-      order.add('B');
-      $('#example2 .bill1').html(billing.get());
-      order.add('A');
-      $('#example2 .bill2').html(billing.get());
-      order.add('B');
-      order.add('A');
-      order.add('A');
-      $('#example2 .bill3').html(billing.get());
-      order.add('A');
-      $('#example2 .bill4').html(billing.get());
-      order.removeLast();
-      $('#example2 .bill5').html(billing.get());
-
-    }(lateRooms.kata.checkout));
-
-    // Example 3 - demonstrates updating of bill after changes in stock keeping unit prices
-    (function (checkout) {
-      var sku, order, billing;
-
-      sku     = checkout.stockKeepingUnits;
-      order   = checkout.order;
-      billing = checkout.billing;
-
-      order.clear();
-
-      sku.set({
-        A: {label: 'Label for A', price: 50},
-        B: {label: 'Label for B', price: 30}
-      });
-
-      order.add('B');
-      $('#example3 .bill1').html(billing.get());
-      order.add('A');
-      order.add('B');
-      $('#example3 .bill2').html(billing.get());
-      sku.setUnitProperty('B', 'price', 50);
-      $('#example3 .bill3').html(billing.get());
-      sku.setUnitProperty('A', 'price', 30);
-      $('#example3 .bill4').html(billing.get());
-    }(lateRooms.kata.checkout));
-
-    // Example 4 - demonstrates calculation of bill from orders with discount options in stock keeping unit prices
-    (function (checkout) {
-      var sku, order, billing;
-
-      sku     = checkout.stockKeepingUnits;
-      order   = checkout.order;
-      billing = checkout.billing;
-
-      order.clear();
-
-      sku.set({
-        'A': {
-          label: 'Label for A',
-          price: 50,
-          discount: {
-            price: function () {
-              return 130 / 3;
-            },
-            limit: 3
-          }
-        },
-        'B': {
-          label: 'Label for B',
-          price: 30,
-          discount: {
-            price: function () {
-              return 45 / 2;
-            },
-            limit: 2
-          }
-        },
-        'C': {
-          label: 'Label for C',
-          price: 20
-        },
-        'D': {
-          label: 'Label for D',
-          price: 15
-        }
-      });
-
-      order.add('A');
-      order.add('B');
-      order.add('A');
-      order.add('A');
-      order.add('B');
-      order.add('B');
-      order.add('A');
-      order.add('D');
-      order.add('C');
-      order.add('D');
-      order.add('C');
-      $('#example4 .bill').html(billing.get());
-    }(lateRooms.kata.checkout));
-  });
 </script>
 </body>
 </html>
