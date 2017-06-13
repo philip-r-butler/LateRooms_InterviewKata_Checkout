@@ -8,11 +8,12 @@
  * Uses module pattern to encapsulate code and reduce pollution of global namespace
  * Uses Facade Design Pattern to provide simple interface for other objects to interact with an order
  **/
+/*global lateRooms */
 (function (checkout) {
 
-    'use strict';
+    "use strict";
 
-    checkout.order = function () {
+    checkout.order = (function () {
 
         var order;
 
@@ -36,21 +37,22 @@
             count: function () {
                 return order.length;
             },
-            countItem: function (item) {
-                var i, result;
-                i      = 0;
+            countItem: function (key) {
+                var result;
                 result = 0;
-                for (i; i < order.length; i += 1) {
-                    if (order[i] == item) {
+                // Loop through order and count items that match item
+                order.forEach(function (i) {
+                    if (i === key) {
                         result += 1;
                     }
-                }
+                });
+
                 return result;
             },
             clear: function () {
                 order = [];
                 checkout.billing.update();
             }
-        }
-    }();
+        };
+    }());
 }(lateRooms.kata.checkout));
