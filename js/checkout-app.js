@@ -7,9 +7,13 @@
  * reduce risk of polluting global namespace,
  * assist in logical organisation of code,
  * reduce likely of collisions occurring in tests */
-
+/*global lateRooms*/
+var lateRooms;
 // Check to determine if lateRooms variable already exists
-var lateRooms = lateRooms || {};
+lateRooms = lateRooms || {};
 
-lateRooms.kata          = lateRooms.kata || {};
+// Add kata object
+lateRooms.kata = lateRooms.kata || {};
+
+// Add checkout object
 lateRooms.kata.checkout = {};
