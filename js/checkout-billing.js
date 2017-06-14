@@ -11,67 +11,90 @@
 /*global lateRooms */
 (function (checkout) {
 
-    'use strict';
+    "use strict";
 
-    checkout.billing = function (order, sku) {
+    checkout.billing = (function (order, sku) {
 
-        var bill, calculateBill;
+        var bill;
+        var calculateBill;
+        var getOrderCount;
+        var hasDiscount;
+        var hasDiscountLimit;
+        var hasDiscountPrice;
+        var getDiscountLimit;
+        var getDiscountPrice;
+        var getCountAtDiscountPrice;
+        var getFullPrice;
+        var getPrice;
 
         bill = 0;
 
-        function getOrderCount(order, key) {
+        getOrderCount = function (order, key) {
             return order.countItem(key);
-        }
+        };
 
-        function hasDiscount(unit) {
-            return unit.hasOwnProperty('discount');
-        }
+        hasDiscount = function (unit) {
+            return unit.hasOwnProperty("discount");
+        };
 
-        function hasDiscountLimit(unit) {
-            return hasDiscount(unit) && unit.discount.hasOwnProperty('limit');
-        }
+        hasDiscountLimit = function (unit) {
+            return hasDiscount(unit) && unit.discount.hasOwnProperty("limit");
+        };
 
-        function hasDiscountPrice(unit) {
-            return hasDiscount(unit) && unit.discount.hasOwnProperty('price');
-        }
+        hasDiscountPrice = function (unit) {
+            return hasDiscount(unit) && unit.discount.hasOwnProperty("price");
+        };
 
-        function getDiscountLimit(unit) {
-            return hasDiscountLimit(unit) ? unit.discount.limit : null;
-        }
+        getDiscountLimit = function (unit) {
+            if (hasDiscountLimit(unit)) {
+                return unit.discount.limit;
+            } else {
+                return null;
+            }
+        };
 
-        function getDiscountPrice(unit) {
-            return hasDiscountPrice(unit) ? unit.discount.price() : null;
-        }
+        getDiscountPrice = function (unit) {
+            if (hasDiscountPrice(unit)) {
+                return unit.discount.price();
+            } else {
+                return null;
+            }
+        };
 
-        function getCountAtDiscountPrice(count, limit) {
-            return limit && count ? Math.floor(count / limit) * limit : null;
-        }
+        getCountAtDiscountPrice = function (count, limit) {
+            if (limit && count) {
+                return Math.floor(count / limit) * limit;
+            } else {
+                return null;
+            }
+        };
 
-        function getFullPrice(unit) {
+        getFullPrice = function (unit) {
             return unit.price;
-        }
+        };
 
-        function getPrice(count, countAtDiscountPrice, fullPrice, discountPrice) {
+        getPrice = function (count, countAtDiscountPrice, fullPrice, discountPrice) {
             return ((count - countAtDiscountPrice) * fullPrice) + (countAtDiscountPrice * discountPrice);
-        }
+        };
 
         // relies on fixed rule for discounts,
         // might be better to define rules in stock keeping units object literal as discount functions
         calculateBill = function () {
-            var key, units, unit, result, unitCount;
+            var key;
+            var units;
+            var unit;
+            var result;
+            var unitCount;
 
             result = 0;
             units = sku.get();
-
             for (key in units) {
-                if (!units.hasOwnProperty(key)) {
-                    continue;
+                if (units.hasOwnProperty(key)) {
+                    unit = units[key];
+                    unitCount = getOrderCount(order, key);
+
+                    result += getPrice(unitCount, getCountAtDiscountPrice(unitCount, getDiscountLimit(unit)), getFullPrice(unit), getDiscountPrice(unit));
                 }
-
-                unit = units[key];
-                unitCount = getOrderCount(order, key);
-
-                result += getPrice(unitCount, getCountAtDiscountPrice(unitCount, getDiscountLimit(unit)), getFullPrice(unit), getDiscountPrice(unit));
             }
             return result;
         };
@@ -87,5 +110,5 @@
                 bill = 0;
             }
         };
-    }(checkout.order, checkout.stockKeepingUnits);
+    }(checkout.order, checkout.stockKeepingUnits));
 }(lateRooms.kata.checkout));
