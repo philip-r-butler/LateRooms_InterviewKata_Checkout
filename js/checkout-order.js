@@ -14,7 +14,6 @@
     "use strict";
 
     checkout.order = (function () {
-
         var order;
 
         order = [];
@@ -23,10 +22,12 @@
             add: function (key) {
                 order.push(key);
                 checkout.billing.update();
+                return this;
             },
             removeLast: function () {
                 order.pop();
                 checkout.billing.update();
+                return this;
             },
             get: function () {
                 return order;
@@ -46,12 +47,12 @@
                         result += 1;
                     }
                 });
-
                 return result;
             },
             clear: function () {
                 order = [];
                 checkout.billing.update();
+                return this;
             }
         };
     }());
