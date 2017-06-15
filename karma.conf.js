@@ -1,23 +1,25 @@
 // Karma configuration
 // Generated on Sun Jun 04 2017 15:20:38 GMT+0100 (GMT Daylight Time)
-
+/*global module*/
 module.exports = function (config) {
-    config.set({
 
+    "use strict";
+
+    config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: "",
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ["jasmine"],
 
         // list of files / patterns to load in the browser
         files: [
-            'js/checkout-app.js',
-            'js/checkout-stockkeepingunits.js',
-            'js/checkout-order.js',
-            'js/checkout-billing.js',
-            'tests/**/*.test.js'
+            "js/checkout-app.js",
+            "js/checkout-stockkeepingunits.js",
+            "js/checkout-order.js",
+            "js/checkout-billing.js",
+            "tests/**/*.test.js"
         ],
 
         // list of files to exclude
@@ -28,9 +30,9 @@ module.exports = function (config) {
         preprocessors: {},
 
         // test results reporter to use
-        // possible values: 'dots', 'progress'
+        // possible values: "dots", "progress"
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ["progress"],
 
         // web server port
         port: 9876,
@@ -47,7 +49,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS', 'Chrome'],
+        browsers: ["PhantomJS", "Chrome"],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -56,5 +58,5 @@ module.exports = function (config) {
         // Concurrency level
         // how many browser should be started simultaneous
         concurrency: Infinity
-    })
-}
+    });
+};
