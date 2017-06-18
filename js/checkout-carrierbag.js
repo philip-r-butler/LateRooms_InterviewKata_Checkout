@@ -1,6 +1,7 @@
 /**
  * Created by mtlsspb4 on 16/06/2017.
  */
+/*global lateRooms*/
 (function (checkout) {
     "use strict";
     checkout.carrierBag = (function (order) {
@@ -26,8 +27,12 @@
         return {
             set: function (settings) {
                 bag = settings;
-                if (!bag.price) bag.price = 0;
-                if (!bag.limit) bag.limit = 0;
+                if (!bag.price) {
+                    bag.price = 0;
+                }
+                if (!bag.limit) {
+                    bag.limit = 0;
+                }
             },
             get: function () {
                 return bag;
