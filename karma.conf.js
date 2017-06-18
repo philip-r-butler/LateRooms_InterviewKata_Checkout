@@ -16,8 +16,10 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             "js/checkout-app.js",
-            "js/checkout-stockkeepingunits.js",
             "js/checkout-order.js",
+            "js/checkout-carrierbag.js",
+            "js/checkout-stockkeepingunits.js",
+            "js/checkout-pricerules.js",
             "js/checkout-billing.js",
             "tests/**/*.test.js"
         ],
@@ -27,7 +29,9 @@ module.exports = function (config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {},
+        preprocessors: {
+            "js/*.js": ["coverage"]
+        },
 
         // test results reporter to use
         // possible values: "dots", "progress"
