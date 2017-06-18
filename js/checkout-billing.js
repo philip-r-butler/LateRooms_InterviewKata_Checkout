@@ -13,7 +13,7 @@
 
     "use strict";
 
-    checkout.billing = (function (order, sku) {
+    checkout.billing = (function (order, sku, bag) {
 
         var bill;
         var calculateBill;
@@ -73,8 +73,9 @@
             return unit.price;
         };
 
+
         getPrice = function (count, countAtDiscountPrice, fullPrice, discountPrice) {
-            return ((count - countAtDiscountPrice) * fullPrice) + (countAtDiscountPrice * discountPrice);
+            return ((count - countAtDiscountPrice) * fullPrice) + (countAtDiscountPrice * discountPrice) + bag.charge();
         };
 
         // relies on fixed rule for discounts,
@@ -110,5 +111,5 @@
                 bill = 0;
             }
         };
-    }(checkout.order, checkout.stockKeepingUnits));
+    }(checkout.order, checkout.stockKeepingUnits, checkout.carrierBag));
 }(lateRooms.kata.checkout));
