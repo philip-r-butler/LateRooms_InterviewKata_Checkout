@@ -9,17 +9,20 @@ describe("Tests for checkout-billing module", function () {
     var bill;
     var order;
     var sku;
+    var bag;
 
     beforeEach(function () {
-        order = lateRooms.kata.checkout.order;
         sku = lateRooms.kata.checkout.stockKeepingUnits;
         bill = lateRooms.kata.checkout.billing;
+        bag = lateRooms.kata.checkout.carrierBag;
+        order = lateRooms.kata.checkout.order;
     });
 
     afterEach(function () {
         order.clear();
         sku.clear();
         bill.clear();
+        bag.clear();
     });
 
     it("Calculate simple bill with single item type in order, no discounts", function () {
@@ -27,16 +30,14 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1);
-        order.add(key1);
+        bag.set({price: 5, limit: 5});
+        sku.set({"A": {label: "Label for A", price: 50}});
 
-        sku.set({
-            "A": {label: "Label for A", price: 50}
-        });
+        order.add(key1).add(key1);
 
         bill.update();
 
-        expect(bill.get()).toBe(100);
+        expect(bill.get()).toBe(105);
 
     });
 
@@ -49,11 +50,7 @@ describe("Tests for checkout-billing module", function () {
         key2 = "B";
         key3 = "C";
 
-        order.add(key1);
-        order.add(key2);
-        order.add(key1);
-        order.add(key1);
-        order.add(key3);
+        order.add(key1).add(key2).add(key1).add(key1).add(key3);
 
         sku.set({
             "A": {label: "Label for A", price: 50},
@@ -71,8 +68,7 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1);
-        order.add(key1);
+        order.add(key1).add(key1);
 
         sku.set({
             "A": {
@@ -98,9 +94,7 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
+        order.add(key1).add(key1).add(key1);
 
         sku.set({
             "A": {
@@ -126,11 +120,7 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
+        order.add(key1).add(key1).add(key1).add(key1).add(key1);
 
         sku.set({
             "A": {
@@ -156,12 +146,7 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
-        order.add(key1);
+        order.add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
 
         sku.set({
             "A": {
@@ -189,13 +174,7 @@ describe("Tests for checkout-billing module", function () {
         key1 = "A";
         key2 = "B";
 
-        order.add(key1);
-        order.add(key2);
-        order.add(key1);
-        order.add(key1);
-        order.add(key2);
-        order.add(key2);
-        order.add(key1);
+        order.add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1);
 
         sku.set({
             "A": {
@@ -238,17 +217,7 @@ describe("Tests for checkout-billing module", function () {
         key3 = "C";
         key4 = "D";
 
-        order.add(key1);
-        order.add(key2);
-        order.add(key1);
-        order.add(key1);
-        order.add(key2);
-        order.add(key2);
-        order.add(key1);
-        order.add(key4);
-        order.add(key3);
-        order.add(key4);
-        order.add(key1);
+        order.add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1).add(key4).add(key3).add(key4).add(key1);
 
         sku.set({
             "A": {
