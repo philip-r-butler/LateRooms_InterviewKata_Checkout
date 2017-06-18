@@ -7,9 +7,11 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
     "use strict";
 
     var sku;
+    var rules;
 
     beforeEach(function () {
         sku = lateRooms.kata.checkout.stockKeepingUnits;
+        rules = lateRooms.kata.checkout.rules;
     });
 
     afterEach(function () {
@@ -26,14 +28,17 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         key = "A";
         label = "Label for " + key;
         price = 50;
-
-        obj = {label: label, price: price};
+        obj = {
+            label: label,
+            price: price,
+            getPrice: rules.fixedPrice
+        };
 
         sku.addUnit(key, obj);
         unit = sku.getUnit("A");
 
         expect(unit.label).toBe(label);
-        expect(unit.price).toBe(price);
+        expect(unit.getPrice()).toBe(price);
     });
 
     it("Set single stock keeping unit property", function () {
