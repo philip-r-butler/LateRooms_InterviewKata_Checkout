@@ -5,22 +5,26 @@
 (function (checkout) {
     "use strict";
 
-    checkout.rules = (function (order) {
-
-        var getOrderCount;
-
-        getOrderCount = function (order) {
-            return order.countItem(this.key);
-        };
+    checkout.rules = (function () {
 
         return {
-            fixedPrice: function () {
-                return this.price;
+            fixedPrice: function (obj) {
+                return obj.price * obj.count;
             },
-            discountWithOrderLimit: function (limit, price) {
-                return limit * price * getOrderCount(order);
+            discountPriceWithOrderLimit: function (obj) {
+                var countAtDiscountPrice;
+
+                countAtDiscountPrice = (function (count, limit) {
+                    if (limit && count) {
+                        return Math.floor(count / limit) * limit;
+                    } else {
+                        return null;
+                    }
+                }(obj.count, obj.discountLimit));
+
+                return (obj.count * obj.fullPrice) + (countAtDiscountPrice * (obj.discountPrice - obj.fullPrice));
             }
         };
-    }(checkout.order));
+    }());
 
 }(lateRooms.kata.checkout));
