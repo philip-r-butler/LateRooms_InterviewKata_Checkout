@@ -12,8 +12,8 @@ describe("Tests for checkout-pricerules module", function () {
         rules = lateRooms.kata.checkout.rules;
     });
 
-    afterEach(function () {
-    });
+/*    afterEach(function () {
+    });*/
 
     it("Apply rules.fixedPrice rule", function () {
         var price;
