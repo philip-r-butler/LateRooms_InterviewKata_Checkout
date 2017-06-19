@@ -10,12 +10,14 @@ describe("Tests for checkout-billing module", function () {
     var order;
     var sku;
     var bag;
+    var rules;
 
     beforeEach(function () {
         sku = lateRooms.kata.checkout.stockKeepingUnits;
         bill = lateRooms.kata.checkout.billing;
         bag = lateRooms.kata.checkout.carrierBag;
         order = lateRooms.kata.checkout.order;
+        rules = lateRooms.kata.checkout.rules;
     });
 
     afterEach(function () {
@@ -38,7 +40,6 @@ describe("Tests for checkout-billing module", function () {
         bill.update();
 
         expect(bill.get()).toBe(105);
-
     });
 
     it("Calculate simple bill with multiple item type in order, no discounts", function () {
@@ -86,7 +87,6 @@ describe("Tests for checkout-billing module", function () {
         bill.update();
 
         expect(bill.get()).toBe(100);
-
     });
 
     it("Calculate bill with single item type in order, with discount and discount limit reached", function () {
@@ -112,7 +112,6 @@ describe("Tests for checkout-billing module", function () {
         bill.update();
 
         expect(bill.get()).toBe(130);
-
     });
 
     it("Calculate bill with single item type in order, with discount and discount limit exceeded", function () {
@@ -138,7 +137,6 @@ describe("Tests for checkout-billing module", function () {
         bill.update();
 
         expect(bill.get()).toBe(230);
-
     });
 
     it("Calculate bill with single item type in order, with discount and discount limit exceeded twice", function () {
@@ -164,7 +162,6 @@ describe("Tests for checkout-billing module", function () {
         bill.update();
 
         expect(bill.get()).toBe(260);
-
     });
 
     it("Calculate bill with two item types in order, with and without discount and discount limit exceeded", function () {
@@ -197,7 +194,6 @@ describe("Tests for checkout-billing module", function () {
                     limit: 2
                 }
             }
-
         });
 
         bill.update();
@@ -253,6 +249,132 @@ describe("Tests for checkout-billing module", function () {
         bill.update();
 
         expect(bill.get()).toBe(355);
+    });
 
+    it("Calculate simple bill with single item type in order, using rules.fixedPrice rule", function () {
+        var key1;
+
+        key1 = "A";
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.fixedPrice,
+                    params: {
+                        price: 25
+                    }
+                }
+            }
+        });
+
+        order.add(key1).add(key1).add(key1);
+
+        expect(bill.get()).toBe(75);
+    });
+
+    it("Calculate simple bill with multiple item types in order, using rules.fixedPrice rule", function () {
+        var key1;
+        var key2;
+
+        key1 = "A";
+        key2 = "B";
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.fixedPrice,
+                    params: {
+                        price: 50
+                    }
+                }
+            },
+            "B": {
+                label: "Label for B",
+                rule: {
+                    func: rules.fixedPrice,
+                    params: {
+                        price: 10
+                    }
+                }
+            }
+        });
+
+        order.add(key1).add(key1).add(key2).add(key1).add(key2).add(key1);
+
+        expect(bill.get()).toBe(220);
+    });
+
+    it("Calculate simple bill with single item type in order, using rules.discountPriceWithOrderLimit rule, number of items in order < discount limit", function () {
+        var key1;
+
+        key1 = "A";
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.discountPriceWithOrderLimit,
+                    params: {
+                        fullPrice: 25,
+                        discountPrice: 20,
+                        discountLimit: 4
+                    }
+                }
+            }
+        });
+
+        order.add(key1).add(key1).add(key1);
+
+        expect(bill.get()).toBe(75);
+    });
+
+    it("Calculate simple bill with single item type in order, using rules.discountPriceWithOrderLimit rule, number of items in order = discount limit", function () {
+        var key1;
+
+        key1 = "A";
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.discountPriceWithOrderLimit,
+                    params: {
+                        fullPrice: 25,
+                        discountPrice: 20,
+                        discountLimit: 4
+                    }
+                }
+            }
+        });
+
+        order.add(key1).add(key1).add(key1).add(key1);
+
+        expect(bill.get()).toBe(80);
+    });
+
+    it("Calculate simple bill with single item type in order, using rules.discountPriceWithOrderLimit rule, number of items in order > discount limit", function () {
+        var key1;
+
+        key1 = "A";
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.discountPriceWithOrderLimit,
+                    params: {
+                        fullPrice: 25,
+                        discountPrice: 20,
+                        discountLimit: 4
+                    }
+                }
+            }
+        });
+
+        order.add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
+
+        expect(bill.get()).toBe(130);
     });
 });

@@ -30,15 +30,14 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         price = 50;
         obj = {
             label: label,
-            price: price,
-            getPrice: rules.fixedPrice
+            price: price
         };
 
         sku.addUnit(key, obj);
         unit = sku.getUnit("A");
 
         expect(unit.label).toBe(label);
-        expect(unit.getPrice()).toBe(price);
+        expect(unit.price).toBe(price);
     });
 
     it("Set single stock keeping unit property", function () {

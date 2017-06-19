@@ -94,7 +94,12 @@
                     unit = units[key];
                     unitCount = getOrderCount(order, key);
 
-                    result += getPrice(unitCount, getCountAtDiscountPrice(unitCount, getDiscountLimit(unit)), getFullPrice(unit), getDiscountPrice(unit));
+                    if (unit.hasOwnProperty("rule")) {
+                        unit.rule.params.count = unitCount;
+                        result += unit.rule.func(unit.rule.params);
+                    } else {
+                        result += getPrice(unitCount, getCountAtDiscountPrice(unitCount, getDiscountLimit(unit)), getFullPrice(unit), getDiscountPrice(unit));
+                    }
                 }
             }
             return result;
