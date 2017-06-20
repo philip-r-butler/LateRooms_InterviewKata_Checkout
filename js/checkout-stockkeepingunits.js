@@ -35,7 +35,7 @@
                 return units[key];
             },
             count: function () {
-                return units.length;
+                return Object.keys(units).length;
             },
             clear: function () {
                 units = {};
