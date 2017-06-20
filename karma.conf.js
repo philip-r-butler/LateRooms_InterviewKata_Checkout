@@ -16,10 +16,10 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             "js/checkout-app.js",
+            "js/checkout-stockkeepingunits.js",
+            "js/checkout-chargerules.js",
             "js/checkout-order.js",
             "js/checkout-carrierbag.js",
-            "js/checkout-stockkeepingunits.js",
-            "js/checkout-pricerules.js",
             "js/checkout-billing.js",
             "tests/**/*.test.js"
         ],

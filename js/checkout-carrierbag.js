@@ -4,7 +4,7 @@
 /*global lateRooms*/
 (function (checkout) {
     "use strict";
-    checkout.carrierBag = (function (order) {
+    checkout.carrierBag = (function (order, rules) {
 
         var defBag;
         var bag;
@@ -41,11 +41,17 @@
                 return numberOfBags();
             },
             charge: function () {
-                return numberOfBags() * bag.price;
+                var params;
+
+                params = {};
+                params.numberOfBags = numberOfBags();
+                params.chargePerBag = bag.price;
+
+                return rules.carrierBagCharge(params);
             },
             clear: function () {
                 bag = defBag;
             }
         };
-    }(checkout.order));
+    }(checkout.order, checkout.rules));
 }(lateRooms.kata.checkout));
