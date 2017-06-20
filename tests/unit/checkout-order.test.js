@@ -7,13 +7,18 @@ describe("Tests for checkout-orders module", function () {
     "use strict";
 
     var order;
+    var sku;
+    var rules;
 
     beforeEach(function () {
         order = lateRooms.kata.checkout.order;
+        sku = lateRooms.kata.checkout.stockKeepingUnits;
+        rules = lateRooms.kata.checkout.rules;
     });
 
     afterEach(function () {
         order.clear();
+        sku.clear();
     });
 
     it("Add single order", function () {
@@ -88,5 +93,66 @@ describe("Tests for checkout-orders module", function () {
         expect(order.countItem(key2)).toBe(2);
         expect(order.countItem(key3)).toBe(1);
 
+    });
+
+    it("Get order charge with multiple order items of same stock keeping unit", function () {
+        var key1;
+
+        key1 = "A";
+
+        order.add(key1);
+        order.add(key1);
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.fixedPrice,
+                    params: {
+                        price: 50
+                    }
+                }
+            }
+        });
+
+        expect(order.charge()).toBe(100);
+    });
+
+    it("Get order charge with multiple order items of different stock keeping unit", function () {
+        var key1;
+        var key2;
+
+        key1 = "A";
+        key2 = "B";
+
+        order.add(key2);
+        order.add(key1);
+        order.add(key2);
+        order.add(key1);
+        order.add(key1);
+        order.add(key1);
+
+        sku.set({
+            "A": {
+                label: "Label for A",
+                rule: {
+                    func: rules.fixedPrice,
+                    params: {
+                        price: 50
+                    }
+                }
+            },
+            "B": {
+                label: "Label for B",
+                rule: {
+                    func: rules.fixedPrice,
+                    params: {
+                        price: 100
+                    }
+                }
+            }
+        });
+
+        expect(order.charge()).toBe(400);
     });
 });
