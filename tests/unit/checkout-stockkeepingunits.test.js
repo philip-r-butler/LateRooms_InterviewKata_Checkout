@@ -7,11 +7,9 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
     "use strict";
 
     var sku;
-    var rules;
 
     beforeEach(function () {
         sku = lateRooms.kata.checkout.stockKeepingUnits;
-        rules = lateRooms.kata.checkout.rules;
     });
 
     afterEach(function () {
@@ -34,8 +32,9 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         };
 
         sku.addUnit(key, obj);
-        unit = sku.getUnit("A");
+        expect(sku.count()).toBe(1);
 
+        unit = sku.getUnit("A");
         expect(unit.label).toBe(label);
         expect(unit.price).toBe(price);
     });
@@ -71,8 +70,11 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         };
 
         sku.set(units);
+        expect(sku.count()).toBe(4);
+
         unit = sku.getUnit("A");
         expect(unit.price).toBe(units.A.price);
+
         unit = sku.getUnit("C");
         expect(unit.price).toBe(units.C.price);
     });
