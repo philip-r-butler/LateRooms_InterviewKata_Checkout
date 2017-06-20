@@ -23,6 +23,9 @@
                 }(obj.count, obj.discountLimit));
 
                 return (obj.count * obj.fullPrice) + (countAtDiscountPrice * (obj.discountPrice - obj.fullPrice));
+            },
+            carrierBagCharge: function (obj) {
+                return obj.numberOfBags * obj.chargePerBag;
             }
         };
     }());
