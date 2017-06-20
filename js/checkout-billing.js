@@ -13,96 +13,25 @@
 
     "use strict";
 
-    checkout.billing = (function (order, sku, bag) {
+    checkout.billing = (function (order, bag) {
 
         var bill;
-        var calculateBill;
-        var getOrderCount;
-        var hasDiscount;
-        var hasDiscountLimit;
-        var hasDiscountPrice;
-        var getDiscountLimit;
-        var getDiscountPrice;
-        var getCountAtDiscountPrice;
-        var getFullPrice;
-        var getPrice;
+        var getOrderCharge;
+        var getBagCharge;
+        var getBill;
 
         bill = 0;
 
-        getOrderCount = function (order, key) {
-            return order.countItem(key);
+        getOrderCharge = function () {
+            return order.charge();
         };
 
-        hasDiscount = function (unit) {
-            return unit.hasOwnProperty("discount");
+        getBagCharge = function () {
+            return bag.charge();
         };
 
-        hasDiscountLimit = function (unit) {
-            return hasDiscount(unit) && unit.discount.hasOwnProperty("limit");
-        };
-
-        hasDiscountPrice = function (unit) {
-            return hasDiscount(unit) && unit.discount.hasOwnProperty("price");
-        };
-
-        getDiscountLimit = function (unit) {
-            if (hasDiscountLimit(unit)) {
-                return unit.discount.limit;
-            } else {
-                return null;
-            }
-        };
-
-        getDiscountPrice = function (unit) {
-            if (hasDiscountPrice(unit)) {
-                return unit.discount.price();
-            } else {
-                return null;
-            }
-        };
-
-        getCountAtDiscountPrice = function (count, limit) {
-            if (limit && count) {
-                return Math.floor(count / limit) * limit;
-            } else {
-                return null;
-            }
-        };
-
-        getFullPrice = function (unit) {
-            return unit.price;
-        };
-
-
-        getPrice = function (count, countAtDiscountPrice, fullPrice, discountPrice) {
-            return ((count - countAtDiscountPrice) * fullPrice) + (countAtDiscountPrice * discountPrice) + bag.charge();
-        };
-
-        // relies on fixed rule for discounts,
-        // might be better to define rules in stock keeping units object literal as discount functions
-        calculateBill = function () {
-            var key;
-            var units;
-            var unit;
-            var result;
-            var unitCount;
-
-            result = 0;
-            units = sku.get();
-            for (key in units) {
-                if (units.hasOwnProperty(key)) {
-                    unit = units[key];
-                    unitCount = getOrderCount(order, key);
-
-                    if (unit.hasOwnProperty("rule")) {
-                        unit.rule.params.count = unitCount;
-                        result += unit.rule.func(unit.rule.params);
-                    } else {
-                        result += getPrice(unitCount, getCountAtDiscountPrice(unitCount, getDiscountLimit(unit)), getFullPrice(unit), getDiscountPrice(unit));
-                    }
-                }
-            }
-            return result;
+        getBill = function () {
+            return getOrderCharge() + getBagCharge();
         };
 
         return {
@@ -110,11 +39,11 @@
                 return bill;
             },
             update: function () {
-                bill = calculateBill();
+                bill = getBill();
             },
             clear: function () {
-                bill = 0;
+                bill = null;
             }
         };
-    }(checkout.order, checkout.stockKeepingUnits, checkout.carrierBag));
+    }(checkout.order, checkout.carrierBag));
 }(lateRooms.kata.checkout));
