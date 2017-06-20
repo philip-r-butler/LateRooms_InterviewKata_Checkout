@@ -42,12 +42,14 @@ interface ICheckout
 * Unit tests are located in the folder /tests/unit
 ## Example usage
 * Checkout solution from https://github.com/philip-r-butler/LateRooms_InterviewKata_Checkout.git
-* Load index.html into browser for examples of us
+* Load index.html into browser for usage examples
 ## Todo
-* Check test coverage
+* <s>Add carrierbag charge feature - added to checkout-carrierbag.js and checkout-billing.js</s>
+* <s>Check test coverage - checked, added tests to get 100% coverage</s>
 * Add unit tests for undeclared, incorrectly initialised and empty objects, in particular sku and order
 * Add error handling
-* Refactor calculateBill() and move definition of discount functions into stock keeping units
+* <s>Refactor calculateBill() and move definition of discount functions into stock keeping units - refactored and moved logic for calculating order and carrier bag charges to respective modules</s>
+* <s>Add charge rules - added checkout-chargerules.js, defined default charges for, fixedPrice, discountPriceWithOrderLimit and carrierBagCharge</s>
 * Optimise calculateBill() so does not need to loop entire stock keeping units
 * Provide examples of running tests outside of Webstorm
 * Make node.js friendly version
