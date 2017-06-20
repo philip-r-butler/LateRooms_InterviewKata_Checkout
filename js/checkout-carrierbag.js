@@ -1,5 +1,11 @@
 /**
- * Created by mtlsspb4 on 16/06/2017.
+ * Created by Phil Butler on 16/06/2017.
+ *
+ * checkout-carrierbag.js - responsible for managing carrier bags,
+ * a carrier bag is required to fulfill an order,
+ * the number of carrier bags is dependent on the size of the order and the limit number of items a bag can carry
+ *
+ * Uses module pattern to encapsulate code and reduce pollution of global namespace
  */
 /*global lateRooms*/
 (function (checkout) {
@@ -17,7 +23,9 @@
         bag = defBag;
 
         numberOfBags = function () {
+            // Returns the number of bags required by a particular order, dependent of bag.limit
             if (bag.limit > 0) {
+                // Calculate the upper integer of the quotient, order count / bag limit
                 return Math.ceil(order.count() / bag.limit);
             } else {
                 return 0;
@@ -46,7 +54,7 @@
                 params = {};
                 params.numberOfBags = numberOfBags();
                 params.chargePerBag = bag.price;
-
+                // Uses returned charge rule, carrierBagcharge, as defined in checkout-chargerules.js
                 return rules.carrierBagCharge(params);
             },
             clear: function () {
