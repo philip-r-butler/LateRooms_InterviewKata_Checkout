@@ -1,53 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Example usage of solution to LateRooms Kata - Checkout</title>
-  <link rel="stylesheet" href="lib/prism/prism.css">
-  <style type="text/css">
-    body {
-      font-family: Arial, SansSerif, monospace
-    }
-    pre {
-        height: 20em;
-        word-wrap: break-word;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Example usage of solution to LateRooms Kata - Checkout</title>
+    <link rel="stylesheet" href="lib/prism/prism.css">
+    <style type="text/css">
+        body {
+            font-family: Arial, SansSerif, monospace
+        }
+
+        pre {
+            height: 20em;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
 <h1>Example usage of solution to LateRooms Kata - Checkout</h1>
 <div id="example1">
-  <h2>Example 1 - demonstrates simple stock keeping units of two item types, no discounts</h2>
-  <p>Code:</p>
-  <pre class="language-javascript"><code class="language-javascript">
-      var sku, order, billing;
+    <h2>Example 1 - demonstrates simple stock keeping units of two item types, no discounts</h2>
+    <p>Code:</p>
+    <pre class="language-javascript"><code class="language-javascript">
+        var sku, order, billing;
 
-      sku     = checkout.stockKeepingUnits;
-      order   = checkout.order;
-      billing = checkout.billing;
+        sku     = checkout.stockKeepingUnits;
+        order   = checkout.order;
+        bill    = checkout.billing;
 
-      order.clear();
+        order.clear();
 
-      sku.set({
-        A: {label: "Label for A", price: 50},
-        B: {label: "Label for B", price: 30}
-      });
+        sku.set({
+            A: {label: "Label for A", price: 50},
+            B: {label: "Label for B", price: 30}
+        });
 
-      order.add("B");
-      order.add("A");
-      order.add("B");
-      order.add("A");
-      order.add("A");
-      order.add("A");
+        order.setUnits(sku.get());
+        order.setRules(rules);
+        order.add("B");
+        order.add("A");
+        order.add("B");
+        order.add("A");
+        order.add("A");
+        order.add("A");
 
-      $("#example1 .bill").html(billing.get());
+        bill.addCharge("order", order.charge());
+        bill.update();
+
+        $("#example1 .bill").html(bill.get());
   </code></pre>
-  <p>Bill total: <span class="bill"></span></p>
+    <p>Bill total: <span class="bill"></span></p>
 </div>
 <div id="example2">
-  <h2>Example 2 - demonstrates billing update following update of orders</h2>
-  <p>Code:</p>
-  <pre class="language-javascript"><code class="language-javascript">
+    <h2>Example 2 - demonstrates billing update following update of orders</h2>
+    <p>Code:</p>
+    <pre class="language-javascript"><code class="language-javascript">
       var sku, order, billing;
 
       sku     = checkout.stockKeepingUnits;
@@ -74,16 +80,16 @@
       order.removeLast();
       $("#example2 .bill5").html(billing.get());
   </code></pre>
-  <p>Bill total: <span class="bill1"></span></p>
-  <p>Bill total: <span class="bill2"></span></p>
-  <p>Bill total: <span class="bill3"></span></p>
-  <p>Bill total: <span class="bill4"></span></p>
-  <p>Bill total: <span class="bill5"></span></p>
+    <p>Bill total: <span class="bill1"></span></p>
+    <p>Bill total: <span class="bill2"></span></p>
+    <p>Bill total: <span class="bill3"></span></p>
+    <p>Bill total: <span class="bill4"></span></p>
+    <p>Bill total: <span class="bill5"></span></p>
 </div>
 <div id="example3">
-  <h2>Example 3 - demonstrates billing update following update of stock keeping unit price</h2>
-  <p>Code:</p>
-  <pre class="language-javascript"><code class="language-javascript">
+    <h2>Example 3 - demonstrates billing update following update of stock keeping unit price</h2>
+    <p>Code:</p>
+    <pre class="language-javascript"><code class="language-javascript">
       var sku, order, billing;
 
       sku     = checkout.stockKeepingUnits;
@@ -107,15 +113,15 @@
       sku.setUnitProperty("A","price",30);
       $("#example3 .bill4").html(billing.get());
   </code></pre>
-  <p>Bill total: <span class="bill1"></span></p>
-  <p>Bill total: <span class="bill2"></span></p>
-  <p>Bill total: <span class="bill3"></span></p>
-  <p>Bill total: <span class="bill4"></span></p>
+    <p>Bill total: <span class="bill1"></span></p>
+    <p>Bill total: <span class="bill2"></span></p>
+    <p>Bill total: <span class="bill3"></span></p>
+    <p>Bill total: <span class="bill4"></span></p>
 </div>
 <div id="example4">
-  <h2>Example 4 - demonstrates calculation of bill from orders with discount options in stock keeping unit prices</h2>
-  <p>Code:</p>
-  <pre class="language-javascript"><code class="language-javascript">
+    <h2>Example 4 - demonstrates calculation of bill from orders with discount options in stock keeping unit prices</h2>
+    <p>Code:</p>
+    <pre class="language-javascript"><code class="language-javascript">
       var sku, order, billing;
 
       sku     = checkout.stockKeepingUnits;
@@ -158,7 +164,7 @@
       order.add("A").add("B").add("A").add("A").add("B").add("B").add("A").add("D").add("C").add("D").add("C");
       $("#example4 .bill").html(billing.get());
   </code></pre>
-  <p>Bill total: <span class="bill"></span></p>
+    <p>Bill total: <span class="bill"></span></p>
 </div>
 <script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
@@ -166,22 +172,23 @@
 <script type="text/javascript" src="js/checkout-app.js"></script>
 <script type="text/javascript" src="js/checkout-order.js"></script>
 <script type="text/javascript" src="js/checkout-stockkeepingunits.js"></script>
+<script type="text/javascript" src="js/checkout-chargerules.js"></script>
 <script type="text/javascript" src="js/checkout-carrierbag.js"></script>
 <script type="text/javascript" src="js/checkout-billing.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
-//        $("pre code").each(function (i, block) {
-//            hljs.highlightBlock(block);
-//        });
-
         //Example 1 - simple stock keeping units of two item types, no discounts
         (function (checkout) {
-            var sku, order, billing;
+            var sku;
+            var rules;
+            var order;
+            var bill;
 
             sku = checkout.stockKeepingUnits;
+            rules = checkout.chargeRules;
             order = checkout.order;
-            billing = checkout.billing;
+            bill = checkout.billing;
 
             order.clear();
 
@@ -190,6 +197,8 @@
                 B: {label: "Label for B", price: 30}
             });
 
+            order.setUnits(sku.get());
+            order.setRules(rules);
             order.add("B");
             order.add("A");
             order.add("B");
@@ -197,7 +206,10 @@
             order.add("A");
             order.add("A");
 
-            $("#example1 .bill").html(billing.get());
+            bill.addCharge("order", order.charge());
+            bill.update();
+
+            $("#example1 .bill").html(bill.get());
 
         }(lateRooms.kata.checkout));
 
