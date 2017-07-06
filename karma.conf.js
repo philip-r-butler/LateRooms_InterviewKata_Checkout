@@ -11,17 +11,19 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ["jasmine"],
+        frameworks: ["mocha"],
 
         // list of files / patterns to load in the browser
         files: [
+            "node_modules/chai/mocha.js",
+            "node_modules/chai/chai.js",
             "js/checkout-app.js",
             "js/checkout-stockkeepingunits.js",
             "js/checkout-chargerules.js",
             "js/checkout-order.js",
             "js/checkout-carrierbag.js",
             "js/checkout-billing.js",
-            "tests/**/*.test.js"
+            "tests/**/*.spec.js"
         ],
 
         // list of files to exclude
