@@ -45,7 +45,7 @@ describe("Tests for checkout-billing module", function () {
 
         sku.set({"A": {label: "Label for A", price: 50}});
 
-        order.setUnits(sku.get()).setRules(rules).add(key1).add(key1);
+        order.setSKU(sku.get()).setRules(rules).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -67,7 +67,7 @@ describe("Tests for checkout-billing module", function () {
             "C": {label: "Label for C", price: 15}
         });
 
-        order.setUnits(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key3);
+        order.setSKU(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key3);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -92,7 +92,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -117,7 +117,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -142,7 +142,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -167,7 +167,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -204,7 +204,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -254,7 +254,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1).add(key4).add(key3).add(key4).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1).add(key4).add(key3).add(key4).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -278,7 +278,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -313,7 +313,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key2).add(key1).add(key2).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key2).add(key1).add(key2).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -339,7 +339,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -365,7 +365,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -391,7 +391,7 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
 
         bill.addCharge("order", order.charge()).update();
 
@@ -405,7 +405,7 @@ describe("Tests for checkout-billing module", function () {
 
         sku.set({"A": {label: "Label for A", price: 50}});
 
-        order.setUnits(sku.get()).add(key1).add(key1);
+        order.setSKU(sku.get()).add(key1).add(key1);
         bag.set({price: 5, limit: 5}).setChargeRule(rules.carrierBagCharge).setOrder(order);
 
         bill.addCharge("order", order.charge()).addCharge("bag", bag.update().charge()).update();

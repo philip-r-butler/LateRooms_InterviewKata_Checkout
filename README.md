@@ -50,6 +50,6 @@ interface ICheckout
 * Add error handling
 * <s>Refactor calculateBill() and move definition of discount functions into stock keeping units - refactored and moved logic for calculating order and carrier bag charges to respective modules</s>
 * <s>Add charge rules - added checkout-chargerules.js, defined default charges for, fixedPrice, discountPriceWithOrderLimit and carrierBagCharge</s>
-* Optimise calculateBill() so does not need to loop entire stock keeping units
+* <s>Optimise calculateBill() so does not need to loop entire stock keeping units</s>
 * Provide examples of running tests outside of Webstorm
 * <s>Make node.js friendly version</s>

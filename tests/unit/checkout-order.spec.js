@@ -52,16 +52,16 @@ describe("Tests for checkout-orders module", function () {
         key2 = "B";
         key3 = "C";
 
-        order.add(key1).add(key2).add(key1).add(key1).add(key3);
+        order.add(key1).add(key3).add(key2).add(key1).add(key1).add(key3);
 
-        expect(order.getItem(3)).to.equal(key1);
-        expect(order.getItem(1)).to.equal(key2);
-        expect(order.getItem(4)).to.equal(key3);
+        expect(order.getItem(key1)).to.equal(3);
+        expect(order.getItem(key2)).to.equal(1);
+        expect(order.getItem(key3)).to.equal(2);
     });
 
-    it("Remove last order", function () {
+    it("Remove order item", function () {
 
-        order.add("A").add("B").removeLast();
+        order.add("A").add("B").remove("B");
 
         expect(order.count()).to.equal(1);
     });
@@ -79,8 +79,8 @@ describe("Tests for checkout-orders module", function () {
 
         ordered = order.get();
 
-        expect(ordered[0]).to.equal(key1);
-        expect(ordered[1]).to.equal(key2);
+        expect(Object.keys(ordered)[0]).to.equal(key1);
+        expect(Object.keys(ordered)[1]).to.equal(key2);
     });
 
     it("Count orders with key", function () {
@@ -120,7 +120,7 @@ describe("Tests for checkout-orders module", function () {
             }
         };
 
-        expect(order.setUnits(units).charge()).to.equal(100);
+        expect(order.setSKU(units).charge()).to.equal(100);
     });
 
     it("Get order charge with multiple order items of different stock keeping unit", function () {
@@ -154,6 +154,6 @@ describe("Tests for checkout-orders module", function () {
 
         order.add(key2).add(key1).add(key2).add(key1).add(key1).add(key1);
 
-        expect(order.setUnits(units).charge()).to.equal(400);
+        expect(order.setSKU(units).charge()).to.equal(400);
     });
 });

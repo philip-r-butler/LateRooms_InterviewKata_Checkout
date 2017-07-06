@@ -197,7 +197,7 @@
                 B: {label: "Label for B", price: 30}
             });
 
-            order.setUnits(sku.get());
+            order.setSKU(sku.get());
             order.setRules(rules);
             order.add("B");
             order.add("A");
@@ -238,7 +238,7 @@
             $("#example2 .bill3").html(billing.get());
             order.add("A");
             $("#example2 .bill4").html(billing.get());
-            order.removeLast();
+            order.remove();
             $("#example2 .bill5").html(billing.get());
 
         }(lateRooms.kata.checkout));
