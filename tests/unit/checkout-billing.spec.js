@@ -6,18 +6,29 @@ describe("Tests for checkout-billing module", function () {
 
     "use strict";
 
-    var bill;
-    var order;
     var sku;
-    var bag;
     var rules;
+    var bag;
+    var order;
+    var bill;
+    var expect;
 
     beforeEach(function () {
-        sku = lateRooms.kata.checkout.stockKeepingUnits;
-        bill = lateRooms.kata.checkout.billing;
-        bag = lateRooms.kata.checkout.carrierBag;
-        order = lateRooms.kata.checkout.order;
-        rules = lateRooms.kata.checkout.rules;
+        if (typeof(module) === "undefined") {
+            expect = chai.expect;
+            sku = lateRooms.kata.checkout.stockKeepingUnits;
+            rules = lateRooms.kata.checkout.chargeRules;
+            order = lateRooms.kata.checkout.order;
+            bag = lateRooms.kata.checkout.carrierBag;
+            bill = lateRooms.kata.checkout.billing;
+        } else {
+            expect = require("chai").expect;
+            sku = require("../../js/checkout-stockkeepingunits");
+            rules = require("../../js/checkout-chargerules");
+            order = require("../../js/checkout-order");
+            bag = require("../../js/checkout-carrierbag");
+            bill = require("../../js/checkout-billing");
+        }
     });
 
     afterEach(function () {
@@ -32,14 +43,13 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        bag.set({price: 5, limit: 5});
         sku.set({"A": {label: "Label for A", price: 50}});
 
-        order.add(key1).add(key1);
+        order.setUnits(sku.get()).setRules(rules).add(key1).add(key1);
 
-        bill.update();
+        bill.addCharge("order", order.charge()).update();
 
-        expect(bill.get()).toBe(105);
+        expect(bill.get()).to.equal(100);
     });
 
     it("Calculate simple bill with multiple item type in order, no discounts", function () {
@@ -51,25 +61,23 @@ describe("Tests for checkout-billing module", function () {
         key2 = "B";
         key3 = "C";
 
-        order.add(key1).add(key2).add(key1).add(key1).add(key3);
-
         sku.set({
             "A": {label: "Label for A", price: 50},
             "B": {label: "Label for B", price: 30},
             "C": {label: "Label for C", price: 15}
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key3);
 
-        expect(bill.get()).toBe(195);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(195);
     });
 
     it("Calculate bill with single item type in order, with discount but discount limit not reached", function () {
         var key1;
 
         key1 = "A";
-
-        order.add(key1).add(key1);
 
         sku.set({
             "A": {
@@ -84,9 +92,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key1);
 
-        expect(bill.get()).toBe(100);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(100);
     });
 
     it("Calculate bill with single item type in order, with discount and discount limit reached", function () {
@@ -94,8 +104,6 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1).add(key1).add(key1);
-
         sku.set({
             "A": {
                 label: "Label for A",
@@ -109,9 +117,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(130);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(130);
     });
 
     it("Calculate bill with single item type in order, with discount and discount limit exceeded", function () {
@@ -119,8 +129,6 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1).add(key1).add(key1).add(key1).add(key1);
-
         sku.set({
             "A": {
                 label: "Label for A",
@@ -134,9 +142,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(230);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(230);
     });
 
     it("Calculate bill with single item type in order, with discount and discount limit exceeded twice", function () {
@@ -144,8 +154,6 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
 
-        order.add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
-
         sku.set({
             "A": {
                 label: "Label for A",
@@ -159,9 +167,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(260);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(260);
     });
 
     it("Calculate bill with two item types in order, with and without discount and discount limit exceeded", function () {
@@ -170,8 +180,6 @@ describe("Tests for checkout-billing module", function () {
 
         key1 = "A";
         key2 = "B";
-
-        order.add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1);
 
         sku.set({
             "A": {
@@ -196,9 +204,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1);
 
-        expect(bill.get()).toBe(255);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(255);
 
     });
 
@@ -212,8 +222,6 @@ describe("Tests for checkout-billing module", function () {
         key2 = "B";
         key3 = "C";
         key4 = "D";
-
-        order.add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1).add(key4).add(key3).add(key4).add(key1);
 
         sku.set({
             "A": {
@@ -246,9 +254,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        bill.update();
+        order.setUnits(sku.get()).add(key1).add(key2).add(key1).add(key1).add(key2).add(key2).add(key1).add(key4).add(key3).add(key4).add(key1);
 
-        expect(bill.get()).toBe(355);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(355);
     });
 
     it("Calculate simple bill with single item type in order, using rules.fixedPrice rule", function () {
@@ -268,9 +278,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.add(key1).add(key1).add(key1);
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(75);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(75);
     });
 
     it("Calculate simple bill with multiple item types in order, using rules.fixedPrice rule", function () {
@@ -301,9 +313,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.add(key1).add(key1).add(key2).add(key1).add(key2).add(key1);
+        order.setUnits(sku.get()).add(key1).add(key1).add(key2).add(key1).add(key2).add(key1);
 
-        expect(bill.get()).toBe(220);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(220);
     });
 
     it("Calculate simple bill with single item type in order, using rules.discountPriceWithOrderLimit rule, number of items in order < discount limit", function () {
@@ -325,9 +339,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.add(key1).add(key1).add(key1);
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(75);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(75);
     });
 
     it("Calculate simple bill with single item type in order, using rules.discountPriceWithOrderLimit rule, number of items in order = discount limit", function () {
@@ -349,9 +365,11 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.add(key1).add(key1).add(key1).add(key1);
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(80);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(80);
     });
 
     it("Calculate simple bill with single item type in order, using rules.discountPriceWithOrderLimit rule, number of items in order > discount limit", function () {
@@ -373,8 +391,25 @@ describe("Tests for checkout-billing module", function () {
             }
         });
 
-        order.add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
+        order.setUnits(sku.get()).add(key1).add(key1).add(key1).add(key1).add(key1).add(key1);
 
-        expect(bill.get()).toBe(130);
+        bill.addCharge("order", order.charge()).update();
+
+        expect(bill.get()).to.equal(130);
+    });
+
+    it("Calculate simple bill with single order item and carrier bag charge", function () {
+        var key1;
+
+        key1 = "A";
+
+        sku.set({"A": {label: "Label for A", price: 50}});
+
+        order.setUnits(sku.get()).add(key1).add(key1);
+        bag.set({price: 5, limit: 5}).setChargeRule(rules.carrierBagCharge).setOrder(order);
+
+        bill.addCharge("order", order.charge()).addCharge("bag", bag.update().charge()).update();
+
+        expect(bill.get()).to.equal(105);
     });
 });
