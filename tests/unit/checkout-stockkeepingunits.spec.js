@@ -1,16 +1,24 @@
 /**
  * Created by Phil Butler on 04/06/2017.
  */
-/*global lateRooms */
+/*global lateRooms, chai */
 describe("Tests for checkout-stockKeepingUnits module", function () {
 
     "use strict";
 
     var sku;
+    var expect;
 
-    beforeEach(function () {
+    if (typeof(module) === "undefined") {
+        expect = chai.expect;
         sku = lateRooms.kata.checkout.stockKeepingUnits;
-    });
+    } else {
+        expect = require("chai").expect;
+        sku = require("../../js/checkout-stockkeepingunits");
+    }
+
+    // beforeEach(function () {
+    // });
 
     afterEach(function () {
         sku.clear();
@@ -32,11 +40,11 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         };
 
         sku.addUnit(key, obj);
-        expect(sku.count()).toBe(1);
+        expect(sku.count()).to.equal(1);
 
         unit = sku.getUnit("A");
-        expect(unit.label).toBe(label);
-        expect(unit.price).toBe(price);
+        expect(unit.label).to.equal(label);
+        expect(unit.price).to.equal(price);
     });
 
     it("Set single stock keeping unit property", function () {
@@ -55,7 +63,7 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         sku.setUnitProperty(key, property, value);
         unit = sku.getUnit("A");
 
-        expect(unit[property]).toBe(value);
+        expect(unit[property]).to.equal(value);
     });
 
     it("Set multiple stock keeping units", function () {
@@ -70,12 +78,12 @@ describe("Tests for checkout-stockKeepingUnits module", function () {
         };
 
         sku.set(units);
-        expect(sku.count()).toBe(4);
+        expect(sku.count()).to.equal(4);
 
         unit = sku.getUnit("A");
-        expect(unit.price).toBe(units.A.price);
+        expect(unit.price).to.equal(units.A.price);
 
         unit = sku.getUnit("C");
-        expect(unit.price).toBe(units.C.price);
+        expect(unit.price).to.equal(units.C.price);
     });
 });
