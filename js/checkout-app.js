@@ -18,4 +18,3 @@ if (typeof module === "undefined") {
     // Declare and initialise checkout object
     lateRooms.kata.checkout = {};
 }
-
