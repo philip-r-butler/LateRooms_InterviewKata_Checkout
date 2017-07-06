@@ -8,21 +8,27 @@
  * Uses module pattern to encapsulate code and reduce pollution of global namespace
  */
 /*global lateRooms*/
-(function (checkout) {
+(function () {
     "use strict";
-    checkout.carrierBag = (function (order, rules) {
+    var carrierBag;
 
+    carrierBag = (function () {
         var defBag;
+        var rule;
+        var order;
         var bag;
-        var numberOfBags;
+        var calculateNumberOfBags;
+        var calculateBagCharge;
+        var charge;
 
         defBag = {
             price: 0,
             limit: 0
         };
         bag = defBag;
+        rule = function (){};
 
-        numberOfBags = function () {
+        calculateNumberOfBags = function () {
             // Returns the number of bags required by a particular order, dependent of bag.limit
             if (bag.limit > 0) {
                 // Calculate the upper integer of the quotient, order count / bag limit
@@ -30,6 +36,16 @@
             } else {
                 return 0;
             }
+        };
+
+        calculateBagCharge = function () {
+            var params;
+
+            params = {};
+            params.numberOfBags = calculateNumberOfBags();
+            params.chargePerBag = bag.price;
+            // Uses returned carrier bag charge rule, carrierBagcharge, as defined in checkout-chargerules.js
+            return rule(params);
         };
 
         return {
@@ -41,25 +57,40 @@
                 if (!bag.limit) {
                     bag.limit = 0;
                 }
+                return this;
             },
             get: function () {
                 return bag;
             },
+            setOrder: function (obj) {
+                order = obj;
+                return this;
+            },
+            setChargeRule: function (obj) {
+                rule = obj;
+                return this;
+            },
             count: function () {
-                return numberOfBags();
+                return calculateNumberOfBags();
             },
             charge: function () {
-                var params;
-
-                params = {};
-                params.numberOfBags = numberOfBags();
-                params.chargePerBag = bag.price;
-                // Uses returned charge rule, carrierBagcharge, as defined in checkout-chargerules.js
-                return rules.carrierBagCharge(params);
+                return charge;
             },
             clear: function () {
                 bag = defBag;
+                return this;
+            },
+            update: function () {
+                charge = calculateBagCharge();
+                return this;
             }
         };
-    }(checkout.order, checkout.rules));
-}(lateRooms.kata.checkout));
+    }());
+
+    if (typeof module === "undefined") {
+        lateRooms.kata.checkout.carrierBag = carrierBag;
+    } else {
+        module.exports = carrierBag;
+    }
+
+}());
