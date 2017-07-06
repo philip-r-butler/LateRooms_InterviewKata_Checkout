@@ -15,8 +15,10 @@
 
     order = (function () {
         var orderItems;
+        var sku;
         var units;
         var rules;
+        var hasKey;
         var hasChargeRule;
         var hasDiscount;
         var hasDiscountLimit;
@@ -28,9 +30,13 @@
         var calculateUnitCharge;
         var calculateOrderCharge;
 
+        sku = {};
         units = {};
         rules = {};
-        orderItems = [];
+
+        hasKey = function (key) {
+            return units.hasOwnProperty(key);
+        };
 
         hasChargeRule = function (unit) {
             return unit.hasOwnProperty("rule");
@@ -68,18 +74,6 @@
             return unit.price;
         };
 
-        countItems = function (key) {
-            var result;
-            result = 0;
-            // Loop through order and count items that match item
-            orderItems.forEach(function (i) {
-                if (i === key) {
-                    result += 1;
-                }
-            });
-            return result;
-        };
-
         calculateUnitCharge = function (unit, num) {
             var params;
 
@@ -100,18 +94,12 @@
 
         calculateOrderCharge = function () {
             var key;
-            var unit;
-            var unitCount;
             var charge;
 
             charge = 0;
 
             for (key in units) {
-                if (units.hasOwnProperty(key)) {
-                    unit = units[key];
-                    unitCount = countItems(key);
-                    charge += calculateUnitCharge(unit, unitCount);
-                }
+                charge += calculateUnitCharge(sku[key], units[key]);
             }
 
             return charge;
@@ -119,34 +107,50 @@
 
         return {
             add: function (key) {
-                orderItems.push(key);
+                if (hasKey(key)) {
+                    units[key] += 1;
+                } else {
+                    units[key] = 1;
+                }
                 return this;
             },
-            removeLast: function () {
-                orderItems.pop();
+            remove: function (key) {
+                if (hasKey(key) && units[key] > 1) {
+                    units[key] -= 1;
+                } else {
+                    delete units[key];
+                }
                 return this;
             },
             get: function () {
-                return orderItems;
+                return units;
             },
-            getItem: function (index) {
-                return orderItems[index];
+            getItem: function (key) {
+                return units[key];
             },
             count: function () {
-                return orderItems.length;
+                var num;
+                var key;
+
+                num = 0;
+
+                for (key in units) {
+                    num += units[key];
+                }
+                return num;
             },
             countItem: function (key) {
-                return countItems(key);
+                return units[key];
             },
             charge: function () {
                 return calculateOrderCharge();
             },
             clear: function () {
-                orderItems = [];
+                units = {};
                 return this;
             },
-            setUnits: function (obj) {
-                units = obj;
+            setSKU: function (obj) {
+                sku = obj;
                 return this;
             },
             setRules: function (obj) {
@@ -250,7 +254,7 @@
 //                 billing.update();
 //                 return this;
 //             },
-//             removeLast: function () {
+//             remove: function () {
 //                 orderItems.pop();
 //                 billing.update();
 //                 return this;
