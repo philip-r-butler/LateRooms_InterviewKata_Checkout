@@ -9,41 +9,56 @@
  * Uses dependency injection to expose order and stock keeping unit methods
  **/
 /*global lateRooms */
-(function (checkout) {
 
+(function () {
     "use strict";
+    var billing;
 
-    checkout.billing = (function (order, bag) {
-
+    billing = (function () {
         var bill;
-        var getOrderCharge;
-        var getBagCharge;
-        var getBill;
+        var charges;
+        var calculateBill;
 
         bill = 0;
+        charges = {};
 
-        getOrderCharge = function () {
-            return order.charge();
-        };
-
-        getBagCharge = function () {
-            return bag.charge();
-        };
-
-        getBill = function () {
-            return getOrderCharge() + getBagCharge();
+        calculateBill = function () {
+            var key;
+            var result;
+            result = 0;
+            for (key in charges) {
+                result += charges[key];
+            }
+            return result;
         };
 
         return {
+            addCharge: function (key, value) {
+                charges[key] = value;
+                return this;
+            },
+            setCharges: function (obj) {
+                charges = obj;
+                return this;
+            },
             get: function () {
                 return bill;
             },
             update: function () {
-                bill = getBill();
+                bill = calculateBill();
+                return this;
             },
             clear: function () {
                 bill = null;
+                return this;
             }
         };
-    }(checkout.order, checkout.carrierBag));
-}(lateRooms.kata.checkout));
+    }());
+
+    if (typeof module === "undefined") {
+        lateRooms.kata.checkout.billing = billing;
+    } else {
+        module.exports = billing;
+    }
+
+}());
