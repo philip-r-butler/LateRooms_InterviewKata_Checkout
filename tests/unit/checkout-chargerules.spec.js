@@ -1,26 +1,33 @@
 /**
  * Created by Phil Butler on 19/06/2017.
  */
-/*global lateRooms */
+/*global lateRooms, chai, module*/
 describe("Tests for checkout-pricerules module", function () {
 
     "use strict";
 
+    var expect;
     var rules;
 
     beforeEach(function () {
-        rules = lateRooms.kata.checkout.rules;
+        if (typeof(module) === "undefined") {
+            expect = chai.expect;
+            rules = lateRooms.kata.checkout.chargeRules;
+        } else {
+            expect = require("chai").expect;
+            rules = require("../../js/checkout-chargerules");
+        }
     });
 
-/*    afterEach(function () {
-    });*/
+    // afterEach(function () {
+    // });
 
     it("Apply rules.fixedPrice rule", function () {
         var price;
 
         price = {count: 1, price: 50};
 
-        expect(rules.fixedPrice(price)).toBe(50);
+        expect(rules.fixedPrice(price)).to.equal(50);
     });
 
     it("Apply rules.discountWithOrderLimit rule, count < discount limit", function () {
@@ -33,7 +40,7 @@ describe("Tests for checkout-pricerules module", function () {
         obj.discountLimit = 5;
         obj.discountPrice = 45;
 
-        expect(rules.discountPriceWithOrderLimit(obj)).toBe(200);
+        expect(rules.discountPriceWithOrderLimit(obj)).to.equal(200);
     });
 
     it("Apply rules.discountWithOrderLimit rule, count = discount limit", function () {
@@ -46,7 +53,7 @@ describe("Tests for checkout-pricerules module", function () {
         obj.discountLimit = 5;
         obj.discountPrice = 45;
 
-        expect(rules.discountPriceWithOrderLimit(obj)).toBe(225);
+        expect(rules.discountPriceWithOrderLimit(obj)).to.equal(225);
     });
 
     it("Apply rules.discountWithOrderLimit rule, count > discount limit", function () {
@@ -59,7 +66,7 @@ describe("Tests for checkout-pricerules module", function () {
         obj.discountLimit = 5;
         obj.discountPrice = 45;
 
-        expect(rules.discountPriceWithOrderLimit(obj)).toBe(275);
+        expect(rules.discountPriceWithOrderLimit(obj)).to.equal(275);
     });
 
     it("Apply rules.discountWithOrderLimit rule, count = 2 * discount limit", function () {
@@ -72,7 +79,7 @@ describe("Tests for checkout-pricerules module", function () {
         obj.discountLimit = 5;
         obj.discountPrice = 45;
 
-        expect(rules.discountPriceWithOrderLimit(obj)).toBe(450);
+        expect(rules.discountPriceWithOrderLimit(obj)).to.equal(450);
     });
 
     it("Apply rules.discountWithOrderLimit rule, count = (2 * discount limit) + 2", function () {
@@ -85,6 +92,6 @@ describe("Tests for checkout-pricerules module", function () {
         obj.discountLimit = 5;
         obj.discountPrice = 45;
 
-        expect(rules.discountPriceWithOrderLimit(obj)).toBe(550);
+        expect(rules.discountPriceWithOrderLimit(obj)).to.equal(550);
     });
 });
