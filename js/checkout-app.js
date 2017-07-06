@@ -8,12 +8,14 @@
  * assist in logical organisation of code,
  * reduce likely of collisions occurring in tests */
 /*global lateRooms*/
-var lateRooms;
-// Check to determine if lateRooms variable already exists
-lateRooms = lateRooms || {};
+if (typeof module === "undefined") {
+    // Declare root object
+    var lateRooms;
+    // Initialise root lateRooms object, checks if already exists
+    lateRooms = lateRooms || {};
+    // Declare and initialise kata object
+    lateRooms.kata = lateRooms.kata || {};
+    // Declare and initialise checkout object
+    lateRooms.kata.checkout = {};
+}
 
-// Add kata object
-lateRooms.kata = lateRooms.kata || {};
-
-// Add checkout object
-lateRooms.kata.checkout = {};
