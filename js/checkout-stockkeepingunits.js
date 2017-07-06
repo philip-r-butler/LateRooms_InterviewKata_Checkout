@@ -7,29 +7,27 @@
  * Uses module pattern to encapsulate code and not pollute global namespace
  **/
 /*global lateRooms */
-(function (checkout) {
-
+(function () {
     "use strict";
+    var stockKeepingUnits;
 
-    checkout.stockKeepingUnits = (function () {
+    stockKeepingUnits = (function () {
         var units;
+
         units = {};
 
         return {
             set: function (obj) {
                 units = obj;
-                checkout.billing.update();
             },
             get: function () {
                 return units;
             },
             addUnit: function (key, obj) {
                 units[key] = obj;
-                checkout.billing.update();
             },
             setUnitProperty: function (key, property, value) {
                 units[key][property] = value;
-                checkout.billing.update();
             },
             getUnit: function (key) {
                 return units[key];
@@ -39,9 +37,15 @@
             },
             clear: function () {
                 units = {};
-                checkout.billing.update();
             }
         };
     }());
 
-}(lateRooms.kata.checkout));
+    if (typeof module === "undefined") {
+        lateRooms.kata.checkout.stockKeepingUnits = stockKeepingUnits;
+    } else {
+        module.exports = stockKeepingUnits;
+    }
+
+}());
+
