@@ -52,4 +52,4 @@ interface ICheckout
 * <s>Add charge rules - added checkout-chargerules.js, defined default charges for, fixedPrice, discountPriceWithOrderLimit and carrierBagCharge</s>
 * Optimise calculateBill() so does not need to loop entire stock keeping units
 * Provide examples of running tests outside of Webstorm
-* Make node.js friendly version
+* <s>Make node.js friendly version</s>
