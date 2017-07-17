@@ -23,12 +23,11 @@
         charges = {};
 
         calculateBill = function () {
-            var key;
             var result;
             result = 0;
-            for (key in charges) {
+            Object.keys(charges).forEach(function (key) {
                 result += charges[key];
-            }
+            });
             return result;
         };
 
@@ -37,10 +36,10 @@
                 charges[key] = value;
                 return this;
             },
-            setCharges: function (obj) {
-                charges = obj;
-                return this;
-            },
+//            setCharges: function (obj) {
+//                charges = obj;
+//                return this;
+//            },
             get: function () {
                 return bill;
             },
