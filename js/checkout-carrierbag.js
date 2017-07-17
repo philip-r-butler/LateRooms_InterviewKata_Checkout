@@ -26,7 +26,6 @@
             limit: 0
         };
         bag = defBag;
-        rule = function (){};
 
         calculateNumberOfBags = function () {
             // Returns the number of bags required by a particular order, dependent of bag.limit
